@@ -1,12 +1,12 @@
-import { Level } from "@/types";
+import { Game } from "@/types";
 
-export const levels: Level[] = [
+export const games: Game[] = [
   {
     id: 1,
     title: "Weather",
     link: "/weather",
     difficulty: "easy",
-    words: ["sun", "rain", "cloud"],
+    words: ["sun", "rain", "snow", "thunder", "cloud"],
   },
   {
     id: 2,
@@ -20,7 +20,7 @@ export const levels: Level[] = [
     title: "Weather",
     link: "/weather",
     difficulty: "easy",
-    words: ["sun", "rain", "cloud"],
+    words: ["sun", "rain", "snow", "thunder", "cloud"],
   },
   {
     id: 4,

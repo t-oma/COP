@@ -1,7 +1,9 @@
-export type Level = {
+export type Difficulty = "easy" | "medium" | "hard";
+
+export type Game = {
   id: number;
   title: string;
   link: string;
-  difficulty: "easy" | "medium" | "hard";
+  difficulty: Difficulty;
   words: string[];
 };
