@@ -29,7 +29,7 @@ export const games: Game[] = [
     title: "Weather",
     link: "/weather",
     difficulty: "easy",
-    words: ["sun", "rain", "snow", "thunder", "cloud"],
+    words: ["sun", "rain", "snow", "cloud"],
   },
   {
     id: 2,
@@ -43,7 +43,7 @@ export const games: Game[] = [
     title: "Weather",
     link: "/weather",
     difficulty: "easy",
-    words: ["sun", "rain", "snow", "thunder", "cloud"],
+    words: ["sun", "rain", "snow", "cloud"],
   },
   {
     id: 4,
