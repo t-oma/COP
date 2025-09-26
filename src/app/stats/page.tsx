@@ -1,6 +1,7 @@
 import AppFooter from "@/components/AppFooter";
 import AppHeader from "@/components/AppHeader";
 import Category from "@/components/Stats/Category";
+import CategoryItems from "@/components/Stats/CategoryItems";
 
 const stats = {
   games: {
@@ -31,19 +32,15 @@ export default function StatsPage() {
         <div className="flex flex-1 justify-center p-16">
           <div className="flex flex-1 flex-col rounded-md border border-zinc-300 bg-zinc-100">
             <Category title="Games">
-              <p>Played: {stats.games.played}</p>
-              <p>Won: {stats.games.won}</p>
-              <p>Lost: {stats.games.lost}</p>
+              <CategoryItems stat={stats.games} />
             </Category>
 
             <Category title="Words">
-              <p>Guessed: {stats.words.guessed}</p>
+              <CategoryItems stat={stats.words} />
             </Category>
 
             <Category title="Difficulties">
-              <p>Easy: {stats.difficulties.easy}</p>
-              <p>Medium: {stats.difficulties.medium}</p>
-              <p>Hard: {stats.difficulties.hard}</p>
+              <CategoryItems stat={stats.difficulties} />
             </Category>
           </div>
         </div>
