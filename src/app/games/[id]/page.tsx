@@ -13,12 +13,18 @@ export default function GamePage() {
       <AppHeader />
 
       <main className="flex flex-1 flex-col">
-        <div className="flex items-center px-10 py-4">
+        <div className="flex items-center border-b border-zinc-300 bg-zinc-100 px-8 py-4">
           <h1 className="text-xl font-semibold">{game?.title}</h1>
         </div>
 
-        <div className="flex flex-1 px-28 py-8">
-          <GameLettersGrid size={size} />
+        <div className="flex flex-1">
+          <section className="flex w-40 flex-col items-center border-r border-zinc-300 bg-zinc-100 p-4">
+            <h2>Found words:</h2>
+          </section>
+
+          <div className="flex flex-1 p-16">
+            <GameLettersGrid size={size} />
+          </div>
         </div>
       </main>
 

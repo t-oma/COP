@@ -3,7 +3,7 @@ import GameCard from "./GameCard";
 
 export default function GamesGrid() {
   return (
-    <div className="grid flex-1 grid-cols-2 gap-4 px-8">
+    <div className="grid flex-1 grid-cols-2 gap-4">
       {games.map((game) => (
         <GameCard
           key={game.id}
