@@ -1,6 +1,6 @@
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
 
+// eslint-disable-next-line
 export function meta({}: Route.MetaArgs) {
   return [
     { title: "New React Router App" },
@@ -8,6 +8,6 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-export default function Home() {
-  return <Welcome />;
+export default function HomePage() {
+  return <>Hello</>;
 }
