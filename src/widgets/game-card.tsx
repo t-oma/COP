@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import type { Game } from "~/types";
+import type { Game } from "~/shared/types";
 
 function GameCard({ game }: { game: Game }) {
   return (
