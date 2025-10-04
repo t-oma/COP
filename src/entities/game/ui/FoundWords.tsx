@@ -5,7 +5,7 @@ interface FoundWordsProps {
   totalWords?: string[];
 }
 
-export default function FoundWords({
+function FoundWords({
   foundWords = EMPTY_ARRAY,
   totalWords = EMPTY_ARRAY,
 }: FoundWordsProps) {
@@ -60,3 +60,5 @@ export default function FoundWords({
     </div>
   );
 }
+
+export { FoundWords };
