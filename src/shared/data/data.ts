@@ -1,6 +1,5 @@
 import type {
   DifficultyNamedSizes as DifficultyNS,
-  Game,
   NumberNamedSizes as NumberNS,
   Size,
 } from "~/shared/types";
@@ -22,34 +21,3 @@ export const DifficultyNamedSizes: DifficultyNS = {
   medium: /**/ Sizes[1],
   hard: /*  */ Sizes[2],
 };
-
-export const games: Game[] = [
-  {
-    id: 1,
-    title: "Weather",
-    link: "/weather",
-    difficulty: "easy",
-    words: ["sun", "rain", "snow", "cloud"],
-  },
-  {
-    id: 2,
-    title: "Animals",
-    link: "/animals",
-    difficulty: "medium",
-    words: ["cat", "dog", "bird", "fish", "snake"],
-  },
-  {
-    id: 3,
-    title: "Weather",
-    link: "/weather",
-    difficulty: "easy",
-    words: ["sun", "rain", "snow", "cloud"],
-  },
-  {
-    id: 4,
-    title: "Animals",
-    link: "/animals",
-    difficulty: "medium",
-    words: ["cat", "dog", "bird", "fish", "snake"],
-  },
-];

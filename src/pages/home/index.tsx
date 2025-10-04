@@ -1,5 +1,5 @@
-import { games } from "~/shared/data/data";
-import { GamesGrid, RootLayout } from "~/widgets";
+import { GameSelection } from "~/features/game-selection";
+import { RootLayout } from "~/widgets";
 
 function HomePage() {
   return (
@@ -9,7 +9,7 @@ function HomePage() {
           <h1 className="text-xl font-semibold">Categories</h1>
         </div>
 
-        <GamesGrid games={games} />
+        <GameSelection />
       </main>
     </RootLayout>
   );

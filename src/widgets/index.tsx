@@ -1,7 +1,5 @@
-import { GameCard } from "./game-card";
-import { GamesGrid } from "./games-grid";
-import { AppFooter } from "./app-footer";
-import { AppHeader } from "./app-header";
-import { RootLayout } from "./root-layout";
+import { AppFooter } from "./AppFooter";
+import { AppHeader } from "./AppHeader";
+import { RootLayout } from "./RootLayout";
 
-export { AppFooter, AppHeader, RootLayout, GameCard, GamesGrid };
+export { AppFooter, AppHeader, RootLayout };

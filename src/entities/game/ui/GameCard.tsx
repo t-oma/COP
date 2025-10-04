@@ -1,7 +1,11 @@
 import { Link } from "react-router";
-import type { Game } from "~/shared/types";
+import type { Game } from "../model/types";
 
-function GameCard({ game }: { game: Game }) {
+interface GameCardProps {
+  game: Game;
+}
+
+export function GameCard({ game }: GameCardProps) {
   return (
     <Link
       key={game.id}
@@ -15,5 +19,3 @@ function GameCard({ game }: { game: Game }) {
     </Link>
   );
 }
-
-export { GameCard };

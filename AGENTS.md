@@ -15,8 +15,15 @@
 - **Styling**: Tailwind CSS
 - **Imports**: Group external imports first, then internal with `~/` alias
 - **Naming**: PascalCase for components, camelCase for functions/variables
-- **Types**: Define interfaces/types in separate `.d.ts` files under `src/shared/types/`
-- **File structure**: `src/app/` (routes), `src/pages/`, `src/shared/`, `src/widgets/`
+- **Architecture**: Feature-Sliced Design (FSD)
+- **Types**: Define interfaces/types in separate `.d.ts` files under appropriate layers
+- **File structure**:
+  - `src/app/` (application layer, routes)
+  - `src/pages/` (page components)
+  - `src/features/` (business features)
+  - `src/entities/` (business entities)
+  - `src/shared/` (shared code and types)
+  - `src/widgets/` (reusable UI components)
 - **Error handling**: Use React Router error boundaries for route errors
 - **Linting**: ESLint with React/TypeScript recommended rules
 
