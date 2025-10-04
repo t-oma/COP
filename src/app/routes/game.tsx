@@ -1,5 +1,5 @@
-import { HomePage } from "~/pages/home/home";
-import type { Route } from "./+types/home";
+import GamePage from "~/pages/game/game";
+import type { Route } from "./+types/game";
 
 // eslint-disable-next-line
 export function meta({}: Route.MetaArgs) {
@@ -9,6 +9,6 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-export default function HomeRoute() {
-  return <HomePage />;
+export default function GameRoute() {
+  return <GamePage />;
 }
