@@ -1,8 +1,8 @@
-import { games } from "~/entities/game";
-import FoundWords from "~/entities/game/ui/FoundWords";
-import GameLettersGrid from "~/entities/game/ui/GameLettersGrid";
-import { DifficultyNamedSizes } from "~/shared/data/data";
-import { RootLayout } from "~/widgets";
+import { games } from '~/entities/game';
+import FoundWords from '~/entities/game/ui/FoundWords';
+import GameLettersGrid from '~/entities/game/ui/GameLettersGrid';
+import { DifficultyNamedSizes } from '~/shared/data/data';
+import { RootLayout } from '~/widgets';
 
 const game = games[0];
 const size = DifficultyNamedSizes[game.difficulty];
@@ -25,7 +25,7 @@ export default function GamePage() {
             <GameLettersGrid size={size} />
           </div>
         </div>
-      </main>{" "}
+      </main>{' '}
     </RootLayout>
   );
 }

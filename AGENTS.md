@@ -26,4 +26,3 @@
   - `src/widgets/` (reusable UI components)
 - **Error handling**: Use React Router error boundaries for route errors
 - **Linting**: ESLint with React/TypeScript recommended rules
-

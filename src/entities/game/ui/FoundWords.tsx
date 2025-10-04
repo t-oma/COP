@@ -10,7 +10,7 @@ export default function FoundWords({
   totalWords = EMPTY_ARRAY,
 }: FoundWordsProps) {
   const remainingWords = totalWords.filter(
-    (word) => !foundWords.includes(word),
+    (word) => !foundWords.includes(word)
   );
 
   return (

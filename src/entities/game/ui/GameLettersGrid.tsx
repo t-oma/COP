@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import type { Size } from "~/shared/types";
-import { getRandomLetter } from "~/shared/utils/utils";
+import { useEffect, useState } from 'react';
+import type { Size } from '~/shared/types';
+import { getRandomLetter } from '~/shared/utils/utils';
 
 function gridLetters({ width, height }: Size) {
   const letters = [];
