@@ -1,4 +1,5 @@
 import { games } from "~/entities/game";
+import FoundWords from "~/entities/game/ui/FoundWords";
 import GameLettersGrid from "~/entities/game/ui/GameLettersGrid";
 import { DifficultyNamedSizes } from "~/shared/data/data";
 import { RootLayout } from "~/widgets";
@@ -7,15 +8,18 @@ const game = games[0];
 const size = DifficultyNamedSizes[game.difficulty];
 
 export default function GamePage() {
+  // TODO: This should come from game state management
+  const foundWords: string[] = [];
+
   return (
     <RootLayout>
       <main className="flex flex-1 flex-col">
-        <div className="flex items-center border-b border-zinc-300 bg-zinc-100 px-8 py-4">
+        <div className="flex items-center border-b border-zinc-300 bg-accent-background px-8 py-4">
           <h1 className="text-xl font-semibold">{game.title}</h1>
         </div>
 
         <div className="flex flex-1">
-          {/* <FoundWords game={game} /> */}
+          <FoundWords foundWords={foundWords} totalWords={game.words} />
 
           <div className="flex flex-1 p-16">
             <GameLettersGrid size={size} />

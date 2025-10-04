@@ -12,13 +12,18 @@ function gridLetters({ width, height }: Size) {
   return letters;
 }
 
-export default function GameLettersGrid({ size }: { size: Size }) {
+interface GameLettersGridProps {
+  size: Size;
+}
+
+export default function GameLettersGrid({ size }: GameLettersGridProps) {
   const [letters, setLetters] = useState<string[]>([]);
 
   useEffect(() => {
     // Generate letters only on client side to avoid hydration mismatch
+    // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect
     setLetters(gridLetters(size));
-  }, [size.width, size.height]);
+  }, [size]);
 
   // Show loading state or empty grid during SSR
   if (letters.length === 0) {
@@ -27,14 +32,18 @@ export default function GameLettersGrid({ size }: { size: Size }) {
         className="grid flex-1"
         style={{ gridTemplateColumns: `repeat(${size.width}, 1fr)` }}
       >
-        {Array.from({ length: size.width * size.height }).map((_, index) => (
-          <div
-            key={index}
-            className="flex items-center justify-center rounded-md bg-zinc-50"
-          >
-            <span className="text-2xl text-zinc-400">?</span>
-          </div>
-        ))}
+        {Array.from({ length: size.width * size.height }).map((_, index) => {
+          const row = Math.floor(index / size.width);
+          const col = index % size.width;
+          return (
+            <div
+              key={`placeholder-${row}-${col}`}
+              className="flex items-center justify-center rounded-md bg-zinc-50"
+            >
+              <span className="text-2xl text-zinc-400">?</span>
+            </div>
+          );
+        })}
       </div>
     );
   }
@@ -44,15 +53,19 @@ export default function GameLettersGrid({ size }: { size: Size }) {
       className="grid flex-1"
       style={{ gridTemplateColumns: `repeat(${size.width}, 1fr)` }}
     >
-      {letters.map((letter, index) => (
-        <button
-          type="button"
-          key={`${letter}-${index}`}
-          className="flex cursor-pointer items-center justify-center rounded-md hover:bg-zinc-100"
-        >
-          <span className="text-2xl">{letter}</span>
-        </button>
-      ))}
+      {letters.map((letter, index) => {
+        const row = Math.floor(index / size.width);
+        const col = index % size.width;
+        return (
+          <button
+            type="button"
+            key={`letter-${row}-${col}-${letter}`}
+            className="flex cursor-pointer items-center justify-center rounded-md hover:bg-zinc-100"
+          >
+            <span className="text-2xl">{letter}</span>
+          </button>
+        );
+      })}
     </div>
   );
 }
