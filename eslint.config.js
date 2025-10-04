@@ -7,6 +7,7 @@ import tseslint from "typescript-eslint";
 export default defineConfig([
   {
     files: ["**/*.ts", "**/*.tsx"],
+    ignores: [".react-router/**"],
 
     // Extend recommended rule sets from:
     // 1. ESLint JS's recommended rules
