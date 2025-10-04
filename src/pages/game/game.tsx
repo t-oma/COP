@@ -14,7 +14,7 @@ export default function GamePage() {
   return (
     <RootLayout>
       <main className="flex flex-1 flex-col">
-        <div className="flex items-center border-b border-zinc-300 bg-accent-background px-8 py-4">
+        <div className="bg-accent-background flex items-center border-b border-zinc-300 px-8 py-4">
           <h1 className="text-xl font-semibold">{game.title}</h1>
         </div>
 

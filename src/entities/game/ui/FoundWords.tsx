@@ -14,11 +14,11 @@ export default function FoundWords({
   );
 
   return (
-    <div className="w-64 border-r border-zinc-200 bg-accent-background p-6">
+    <div className="bg-accent-background w-64 border-r border-zinc-200 p-6">
       <div className="space-y-6">
         {/* Found Words Section */}
         <div>
-          <h3 className="text-lg font-semibold text-zinc-900 mb-3">
+          <h3 className="mb-3 text-lg font-semibold text-zinc-900">
             Found Words ({foundWords.length}/{totalWords.length})
           </h3>
           <div className="space-y-2">
@@ -28,7 +28,7 @@ export default function FoundWords({
               foundWords.map((word) => (
                 <div
                   key={word}
-                  className="flex items-center justify-between p-2 bg-green-100 text-green-800 rounded-md"
+                  className="flex items-center justify-between rounded-md bg-green-100 p-2 text-green-800"
                 >
                   <span className="font-medium">{word}</span>
                   <span className="text-xs">✓</span>
@@ -41,14 +41,14 @@ export default function FoundWords({
         {/* Remaining Words Section */}
         {remainingWords.length > 0 && (
           <div>
-            <h4 className="text-sm font-medium text-zinc-700 mb-2">
+            <h4 className="mb-2 text-sm font-medium text-zinc-700">
               Words to Find
             </h4>
             <div className="space-y-1">
               {remainingWords.map((word) => (
                 <div
                   key={word}
-                  className="text-sm text-zinc-600 p-2 bg-zinc-100 rounded-md"
+                  className="rounded-md bg-zinc-100 p-2 text-sm text-zinc-600"
                 >
                   {word}
                 </div>
