@@ -1,5 +1,5 @@
-import { GameSelection } from '~/features/game-selection';
-import { RootLayout } from '~/widgets';
+import { GameSelection } from "~/features/game-selection";
+import { RootLayout } from "~/widgets";
 
 function HomePage() {
   return (

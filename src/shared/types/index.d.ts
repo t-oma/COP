@@ -1,3 +1,3 @@
-import type { DifficultyNamedSizes, NumberNamedSizes, Size } from './size';
+import type { DifficultyNamedSizes, NumberNamedSizes, Size } from "./size";
 
 export { Size, NumberNamedSizes, DifficultyNamedSizes };

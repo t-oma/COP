@@ -1,11 +1,11 @@
-import { HomePage } from '~/pages/home/home';
-import type { Route } from './+types/home';
+import { HomePage } from "~/pages/home/home";
+import type { Route } from "./+types/home";
 
 // eslint-disable-next-line
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: 'New React Router App' },
-    { name: 'description', content: 'Welcome to React Router!' },
+    { title: "New React Router App" },
+    { name: "description", content: "Welcome to React Router!" },
   ];
 }
 

@@ -4,9 +4,9 @@ export type Size = {
 };
 
 export type NumberNamedSizes = {
-  '5x5': Size;
-  '7x7': Size;
-  '9x9': Size;
+  "5x5": Size;
+  "7x7": Size;
+  "9x9": Size;
 };
 
 export type DifficultyNamedSizes = {

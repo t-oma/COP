@@ -2,7 +2,7 @@ import type {
   DifficultyNamedSizes as DifficultyNS,
   NumberNamedSizes as NumberNS,
   Size,
-} from '~/shared/types';
+} from "~/shared/types";
 
 export const Sizes: Size[] = [
   { width: 5, height: 5 },
@@ -11,9 +11,9 @@ export const Sizes: Size[] = [
 ];
 
 export const NumberNamedSizes: NumberNS = {
-  '5x5': Sizes[0],
-  '7x7': Sizes[1],
-  '9x9': Sizes[2],
+  "5x5": Sizes[0],
+  "7x7": Sizes[1],
+  "9x9": Sizes[2],
 };
 
 export const DifficultyNamedSizes: DifficultyNS = {

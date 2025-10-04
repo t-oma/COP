@@ -1,4 +1,4 @@
-import { AppFooter, AppHeader } from '~/widgets';
+import { AppFooter, AppHeader } from "~/widgets";
 
 function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
