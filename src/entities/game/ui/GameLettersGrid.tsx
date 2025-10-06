@@ -29,7 +29,7 @@ function GameLettersGrid({ size }: GameLettersGridProps) {
   if (letters.length === 0) {
     return (
       <div
-        className="grid flex-1"
+        className="bg-accent-background grid flex-1 rounded-md p-4"
         style={{ gridTemplateColumns: `repeat(${size.width}, 1fr)` }}
       >
         {Array.from({ length: size.width * size.height }).map((_, index) => {
@@ -50,7 +50,7 @@ function GameLettersGrid({ size }: GameLettersGridProps) {
 
   return (
     <div
-      className="grid flex-1"
+      className="bg-accent-background grid flex-1 rounded-md p-4"
       style={{ gridTemplateColumns: `repeat(${size.width}, 1fr)` }}
     >
       {letters.map((letter, index) => {
@@ -60,7 +60,7 @@ function GameLettersGrid({ size }: GameLettersGridProps) {
           <button
             type="button"
             key={`letter-${row}-${col}-${letter}`}
-            className="flex cursor-pointer items-center justify-center rounded-md hover:bg-zinc-100"
+            className="flex cursor-pointer items-center justify-center rounded-md hover:bg-zinc-50"
           >
             <span className="text-2xl">{letter}</span>
           </button>
