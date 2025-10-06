@@ -5,7 +5,7 @@ interface GlobalStatsProps {
   stats: Stats;
 }
 
-export default function GlobalStats({ stats }: Readonly<GlobalStatsProps>) {
+function GlobalStats({ stats }: Readonly<GlobalStatsProps>) {
   const cards = [
     {
       title: "Games Played",
@@ -53,3 +53,5 @@ export default function GlobalStats({ stats }: Readonly<GlobalStatsProps>) {
     </div>
   );
 }
+
+export { GlobalStats };

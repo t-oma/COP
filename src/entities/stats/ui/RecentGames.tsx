@@ -4,9 +4,7 @@ interface RecentGamesProps {
   recentGames: RecentGame[];
 }
 
-export default function RecentGames({
-  recentGames,
-}: Readonly<RecentGamesProps>) {
+function RecentGames({ recentGames }: Readonly<RecentGamesProps>) {
   return (
     <div className="mt-12">
       <h2 className="mb-6 text-lg font-semibold text-zinc-900">Recent Games</h2>
@@ -33,3 +31,5 @@ export default function RecentGames({
     </div>
   );
 }
+
+export { RecentGames };

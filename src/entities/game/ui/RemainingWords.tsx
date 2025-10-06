@@ -6,9 +6,7 @@ interface RemainingWordsProps {
   words: string[];
 }
 
-export default function RemainingWords({
-  words,
-}: Readonly<RemainingWordsProps>) {
+function RemainingWords({ words }: Readonly<RemainingWordsProps>) {
   const [visible, setVisible] = useState(false);
 
   return (
@@ -44,3 +42,5 @@ export default function RemainingWords({
     </div>
   );
 }
+
+export { RemainingWords };

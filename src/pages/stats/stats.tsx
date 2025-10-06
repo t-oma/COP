@@ -1,6 +1,4 @@
-import { recentGames, stats } from "~/entities/stats";
-import GlobalStats from "~/entities/stats/ui/GlobalStats";
-import RecentGames from "~/entities/stats/ui/RecentGames";
+import { GlobalStats, RecentGames, recentGames, stats } from "~/entities/stats";
 import { RootLayout } from "~/widgets";
 
 export default function StatsPage() {

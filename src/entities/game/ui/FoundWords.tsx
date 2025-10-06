@@ -1,5 +1,5 @@
 import { Check } from "lucide-react";
-import RemainingWords from "./RemainingWords";
+import { RemainingWords } from "./RemainingWords";
 
 const EMPTY_ARRAY: string[] = [];
 
