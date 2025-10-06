@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Size } from "~/shared/types";
 import { getRandomLetter } from "~/shared/utils/utils";
+import { GridWidth } from "~/widgets";
 
 function gridLetters({ width, height }: Size) {
   const letters = [];
@@ -28,10 +29,7 @@ function GameLettersGrid({ size }: GameLettersGridProps) {
   // Show loading state or empty grid during SSR
   if (letters.length === 0) {
     return (
-      <div
-        className="bg-accent-background grid flex-1 rounded-md p-4"
-        style={{ gridTemplateColumns: `repeat(${size.width}, 1fr)` }}
-      >
+      <GridWidth width={size.width}>
         {Array.from({ length: size.width * size.height }).map((_, index) => {
           const row = Math.floor(index / size.width);
           const col = index % size.width;
@@ -44,15 +42,12 @@ function GameLettersGrid({ size }: GameLettersGridProps) {
             </div>
           );
         })}
-      </div>
+      </GridWidth>
     );
   }
 
   return (
-    <div
-      className="bg-accent-background grid flex-1 rounded-md p-4"
-      style={{ gridTemplateColumns: `repeat(${size.width}, 1fr)` }}
-    >
+    <GridWidth width={size.width}>
       {letters.map((letter, index) => {
         const row = Math.floor(index / size.width);
         const col = index % size.width;
@@ -66,7 +61,7 @@ function GameLettersGrid({ size }: GameLettersGridProps) {
           </button>
         );
       })}
-    </div>
+    </GridWidth>
   );
 }
 
