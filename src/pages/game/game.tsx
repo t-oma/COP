@@ -1,4 +1,4 @@
-import { FoundWords, GameLettersGrid, games } from "~/entities/game";
+import { FoundWords, games, LettersGrid } from "~/entities/game";
 import { DifficultyNamedSizes } from "~/shared/data/data";
 import { RootLayout } from "~/widgets";
 
@@ -20,7 +20,7 @@ export default function GamePage() {
           <FoundWords foundWords={foundWords} totalWords={game.words} />
 
           <div className="flex flex-1 p-16">
-            <GameLettersGrid size={size} />
+            <LettersGrid size={size} />
           </div>
         </div>
       </main>

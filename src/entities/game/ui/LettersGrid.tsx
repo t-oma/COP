@@ -13,11 +13,11 @@ function gridLetters({ width, height }: Size) {
   return letters;
 }
 
-interface GameLettersGridProps {
+interface LettersGridProps {
   size: Size;
 }
 
-function GameLettersGrid({ size }: GameLettersGridProps) {
+function LettersGrid({ size }: Readonly<LettersGridProps>) {
   const [letters, setLetters] = useState<string[]>([]);
 
   useEffect(() => {
@@ -65,4 +65,4 @@ function GameLettersGrid({ size }: GameLettersGridProps) {
   );
 }
 
-export { GameLettersGrid };
+export { LettersGrid };
