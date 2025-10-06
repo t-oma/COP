@@ -1,8 +1,5 @@
-# Run type checking
+# Run type checking (full project)
 pnpm run typecheck
 
-# Run linting
-pnpm run lint
-
-# Run formatting check
-pnpm run format
+# Run lint-staged (only staged files)
+npx lint-staged
