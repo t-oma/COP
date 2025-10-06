@@ -38,7 +38,7 @@ function GameLettersGrid({ size }: GameLettersGridProps) {
           return (
             <div
               key={`placeholder-${row}-${col}`}
-              className="flex items-center justify-center rounded-md bg-zinc-50"
+              className="flex items-center justify-center rounded-md"
             >
               <span className="text-2xl text-zinc-400">?</span>
             </div>
