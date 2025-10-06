@@ -8,6 +8,7 @@ dist/
 
 # Generated files
 .react-router/
+.git/
 
 # Config files that shouldn't be formatted
 *.config.js
