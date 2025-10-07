@@ -17,34 +17,32 @@ function FoundWords({
   );
 
   return (
-    <div className="bg-accent-background w-64 border-r border-zinc-200 p-6">
-      <div className="space-y-6">
-        {/* Found Words Section */}
+    <div className="space-y-6">
+      {/* Found Words Section */}
+      <div className="space-y-2">
+        <h3 className="text-lg font-semibold text-zinc-900">
+          Found Words ({foundWords.length}/{totalWords.length})
+        </h3>
         <div className="space-y-2">
-          <h3 className="text-lg font-semibold text-zinc-900">
-            Found Words ({foundWords.length}/{totalWords.length})
-          </h3>
-          <div className="space-y-2">
-            {foundWords.length === 0 ? (
-              <p className="text-sm text-zinc-500 italic">No words found yet</p>
-            ) : (
-              foundWords.map((word) => (
-                <div
-                  key={word}
-                  className="flex items-center justify-between rounded-md bg-green-100 p-2 text-green-800"
-                >
-                  <span className="font-medium">{word}</span>
-                  <span className="text-xs">
-                    <Check className="h-4 w-4" />
-                  </span>
-                </div>
-              ))
-            )}
-          </div>
+          {foundWords.length === 0 ? (
+            <p className="text-sm text-zinc-500 italic">No words found yet</p>
+          ) : (
+            foundWords.map((word) => (
+              <div
+                key={word}
+                className="flex items-center justify-between rounded-md bg-green-100 p-2 text-green-800"
+              >
+                <span className="font-medium">{word}</span>
+                <span className="text-xs">
+                  <Check className="h-4 w-4" />
+                </span>
+              </div>
+            ))
+          )}
         </div>
-
-        {remainingWords.length > 0 && <RemainingWords words={remainingWords} />}
       </div>
+
+      {remainingWords.length > 0 && <RemainingWords words={remainingWords} />}
     </div>
   );
 }
