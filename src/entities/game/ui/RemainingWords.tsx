@@ -26,14 +26,16 @@ function RemainingWords({ words }: Readonly<RemainingWordsProps>) {
           )}
         </button>
       </div>
-      <div className="flex flex-col space-y-1">
+      <div
+        className={clsx(
+          "flex flex-col space-y-1",
+          !visible && "blur-xs select-none"
+        )}
+      >
         {words.map((word) => (
           <span
             key={word}
-            className={clsx(
-              "rounded-md bg-zinc-100 p-2 text-sm text-zinc-600 transition-all",
-              !visible && "blur-xs select-none"
-            )}
+            className="rounded-md bg-zinc-100 p-2 text-sm text-zinc-600 transition-all"
           >
             {word}
           </span>
