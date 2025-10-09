@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { Position } from "~/features/game-play";
+import { useDraggableSelection, type Position } from "~/features/game-play";
 import type { Size } from "~/shared/types";
 import { getRandomLetter } from "~/shared/utils/utils";
 import { GridWidth } from "~/widgets";
@@ -28,9 +28,16 @@ function LettersGrid({
   onSelectionChange,
 }: Readonly<LettersGridProps>) {
   const [letters, setLetters] = useState<string[]>([]);
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState<Position | null>(null);
   const gridRef = useRef<HTMLDivElement>(null);
+
+  const {
+    startDragSelection,
+    stopDragSelection,
+    endDragSelection,
+    onDragSelectionChange,
+  } = useDraggableSelection({
+    onSelectionChange,
+  });
 
   useEffect(() => {
     // Generate letters only on client side to avoid hydration mismatch
@@ -49,47 +56,21 @@ function LettersGrid({
 
   const handleMouseDown = useCallback(
     (row: number, col: number) => {
-      setIsDragging(true);
-      setDragStart({ row, col });
-      const newSelection = [{ row, col }];
-      onSelectionChange?.(newSelection);
+      startDragSelection(row, col);
     },
-    [onSelectionChange]
+    [startDragSelection]
   );
 
   const handleMouseEnter = useCallback(
     (row: number, col: number) => {
-      if (!isDragging || !dragStart) return;
-
-      const newSelection: Position[] = [];
-      const rowDiff = Math.abs(row - dragStart.row);
-      const colDiff = Math.abs(col - dragStart.col);
-
-      // Check if it's a valid straight line (horizontal, vertical, or diagonal)
-      if (rowDiff === colDiff || rowDiff === 0 || colDiff === 0) {
-        const rowStep = row > dragStart.row ? 1 : row < dragStart.row ? -1 : 0;
-        const colStep = col > dragStart.col ? 1 : col < dragStart.col ? -1 : 0;
-
-        const steps = Math.max(rowDiff, colDiff);
-        for (let i = 0; i <= steps; i++) {
-          const currentRow = dragStart.row + rowStep * i;
-          const currentCol = dragStart.col + colStep * i;
-          newSelection.push({ row: currentRow, col: currentCol });
-        }
-      } else {
-        // Not a straight line - just select current position
-        newSelection.push({ row, col });
-      }
-
-      onSelectionChange?.(newSelection);
+      onDragSelectionChange(row, col);
     },
-    [isDragging, dragStart, onSelectionChange]
+    [onDragSelectionChange]
   );
 
   const handleMouseUp = useCallback(() => {
-    setIsDragging(false);
-    setDragStart(null);
-  }, []);
+    endDragSelection();
+  }, [endDragSelection]);
 
   // Global mouse up handler
   useEffect(() => {
@@ -121,7 +102,7 @@ function LettersGrid({
     <div
       ref={gridRef}
       className="flex flex-1 select-none"
-      onMouseLeave={() => setIsDragging(false)}
+      onMouseLeave={stopDragSelection}
     >
       <GridWidth width={size.width}>
         {letters.map((letter, index) => {
