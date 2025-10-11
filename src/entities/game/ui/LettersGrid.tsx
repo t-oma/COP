@@ -14,30 +14,24 @@ function gridLetters({ width, height }: Size) {
   return letters;
 }
 
-const EMPTY_POSITIONS: Position[] = [];
-
 interface LettersGridProps {
   size: Size;
-  selectedPositions?: Position[];
+  selectedPositions: Position[];
   onSelectionChange?: (positions: Position[]) => void;
 }
 
 function LettersGrid({
   size,
-  selectedPositions = EMPTY_POSITIONS,
+  selectedPositions,
   onSelectionChange,
 }: Readonly<LettersGridProps>) {
   const [letters, setLetters] = useState<string[]>([]);
   const gridRef = useRef<HTMLDivElement>(null);
 
-  const {
-    startDragSelection,
-    stopDragSelection,
-    endDragSelection,
-    onDragSelectionChange,
-  } = useDraggableSelection({
-    onSelectionChange,
-  });
+  const { startDragSelection, updateDragSelection, endDragSelection } =
+    useDraggableSelection({
+      onSelectionChange,
+    });
 
   useEffect(() => {
     // Generate letters only on client side to avoid hydration mismatch
@@ -48,7 +42,7 @@ function LettersGrid({
   const isPositionSelected = useCallback(
     (row: number, col: number) => {
       return selectedPositions.some(
-        (pos) => pos.row === row && pos.col === col
+        (pos: Position) => pos.row === row && pos.col === col
       );
     },
     [selectedPositions]
@@ -63,9 +57,9 @@ function LettersGrid({
 
   const handleMouseEnter = useCallback(
     (row: number, col: number) => {
-      onDragSelectionChange(row, col);
+      updateDragSelection(row, col);
     },
-    [onDragSelectionChange]
+    [updateDragSelection]
   );
 
   const handleMouseUp = useCallback(() => {
@@ -74,9 +68,13 @@ function LettersGrid({
 
   // Global mouse up handler
   useEffect(() => {
-    document.addEventListener("mouseup", handleMouseUp);
-    return () => document.removeEventListener("mouseup", handleMouseUp);
-  }, [handleMouseUp]);
+    const handleGlobalMouseUp = () => {
+      endDragSelection();
+    };
+
+    document.addEventListener("mouseup", handleGlobalMouseUp);
+    return () => document.removeEventListener("mouseup", handleGlobalMouseUp);
+  }, [endDragSelection]);
 
   // Show loading state or empty grid during SSR
   if (letters.length === 0) {
@@ -102,7 +100,7 @@ function LettersGrid({
     <div
       ref={gridRef}
       className="flex flex-1 select-none"
-      onMouseLeave={stopDragSelection}
+      onMouseLeave={endDragSelection}
     >
       <GridWidth width={size.width}>
         {letters.map((letter, index) => {

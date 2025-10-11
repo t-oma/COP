@@ -24,9 +24,7 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
   const handleSubmitWord = () => {
     if (selectedPositions.length === 0) return;
 
-    // Тимчасова логіка - перевіряємо чи слово існує
-    // В реальній реалізації тут буде складніша логіка перевірки слова
-    const mockWord = "test"; // Тимчасово
+    const mockWord = "test";
     if (game.words.includes(mockWord) && !foundWords.includes(mockWord)) {
       setFoundWords((prev) => [...prev, mockWord]);
     }
