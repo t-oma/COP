@@ -1,9 +1,10 @@
 import { useState } from "react";
+
 import { FoundWords, games } from "~/entities/game";
 import { SelectableLettersGrid } from "~/features/word-selection";
 import { DifficultyNamedSizes } from "~/shared/data/data";
-import type { Position } from "~/shared/types";
 import { GameTimer, SidePanel } from "~/widgets";
+import type { Position } from "~/shared/types";
 
 interface GamePlayProps {
   gameId?: number;

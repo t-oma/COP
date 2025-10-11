@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+
 import { useTimer } from "~/shared/hooks";
 
 interface GameTimerProps {

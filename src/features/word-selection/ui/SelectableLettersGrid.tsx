@@ -1,7 +1,8 @@
 import { useCallback, useEffect } from "react";
+
 import { LettersGrid } from "~/entities/game";
-import type { Position, Size } from "~/shared/types";
 import { useDraggableSelection } from "../lib/useDraggableSelection";
+import type { Position, Size } from "~/shared/types";
 
 interface SelectableLettersGridProps {
   size: Size;

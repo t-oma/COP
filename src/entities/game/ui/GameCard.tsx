@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+
 import type { Game } from "../model/types";
 
 interface GameCardProps {

@@ -1,6 +1,7 @@
+import { useState } from "react";
+
 import clsx from "clsx";
 import { Eye, EyeOff } from "lucide-react";
-import { useState } from "react";
 
 interface RemainingWordsProps {
   words: string[];
