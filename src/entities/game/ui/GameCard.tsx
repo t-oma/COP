@@ -9,7 +9,7 @@ export function GameCard({ game }: GameCardProps) {
   return (
     <Link
       key={game.id}
-      to={`#${game.link}`}
+      to={`games/${game.id}`}
       className="relative flex flex-col items-center justify-center gap-2 rounded-lg bg-zinc-50 p-4 shadow-sm hover:bg-zinc-100"
     >
       <span className="text-xl">{game.title}</span>
