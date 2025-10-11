@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import type { Position } from "../model/types";
+import type { Position } from "~/shared/types";
 
 interface UseDraggableSelectionReturn {
   isDragging: boolean;

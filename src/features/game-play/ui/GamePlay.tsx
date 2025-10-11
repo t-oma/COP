@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { FoundWords, games, LettersGrid } from "~/entities/game";
+import { FoundWords, games } from "~/entities/game";
+import { SelectableLettersGrid } from "~/features/word-selection";
 import { DifficultyNamedSizes } from "~/shared/data/data";
+import type { Position } from "~/shared/types";
 import { GameTimer, SidePanel } from "~/widgets";
-import type { Position } from "../model/types";
 
 interface GamePlayProps {
   gameId?: number;
@@ -71,7 +72,7 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
       </SidePanel>
 
       <div className="flex flex-1 p-16">
-        <LettersGrid
+        <SelectableLettersGrid
           size={size}
           selectedPositions={selectedPositions}
           onSelectionChange={handleSelectionChange}

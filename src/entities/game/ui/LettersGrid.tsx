@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useDraggableSelection, type Position } from "~/features/game-play";
+import { useEffect, useRef, useState } from "react";
 import type { Size } from "~/shared/types";
 import { getRandomLetter } from "~/shared/utils/utils";
 import { GridWidth } from "~/widgets";
@@ -16,65 +15,27 @@ function gridLetters({ width, height }: Size) {
 
 interface LettersGridProps {
   size: Size;
-  selectedPositions: Position[];
-  onSelectionChange?: (positions: Position[]) => void;
+  onMouseDown?: (row: number, col: number) => void;
+  onMouseEnter?: (row: number, col: number) => void;
+  onMouseUp?: () => void;
+  isPositionSelected?: (row: number, col: number) => boolean;
 }
 
 function LettersGrid({
   size,
-  selectedPositions,
-  onSelectionChange,
-}: Readonly<LettersGridProps>) {
+  onMouseDown,
+  onMouseEnter,
+  onMouseUp,
+  isPositionSelected,
+}: LettersGridProps) {
   const [letters, setLetters] = useState<string[]>([]);
   const gridRef = useRef<HTMLDivElement>(null);
-
-  const { startDragSelection, updateDragSelection, endDragSelection } =
-    useDraggableSelection({
-      onSelectionChange,
-    });
 
   useEffect(() => {
     // Generate letters only on client side to avoid hydration mismatch
     // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect
     setLetters(gridLetters(size));
   }, [size]);
-
-  const isPositionSelected = useCallback(
-    (row: number, col: number) => {
-      return selectedPositions.some(
-        (pos: Position) => pos.row === row && pos.col === col
-      );
-    },
-    [selectedPositions]
-  );
-
-  const handleMouseDown = useCallback(
-    (row: number, col: number) => {
-      startDragSelection(row, col);
-    },
-    [startDragSelection]
-  );
-
-  const handleMouseEnter = useCallback(
-    (row: number, col: number) => {
-      updateDragSelection(row, col);
-    },
-    [updateDragSelection]
-  );
-
-  const handleMouseUp = useCallback(() => {
-    endDragSelection();
-  }, [endDragSelection]);
-
-  // Global mouse up handler
-  useEffect(() => {
-    const handleGlobalMouseUp = () => {
-      endDragSelection();
-    };
-
-    document.addEventListener("mouseup", handleGlobalMouseUp);
-    return () => document.removeEventListener("mouseup", handleGlobalMouseUp);
-  }, [endDragSelection]);
 
   // Show loading state or empty grid during SSR
   if (letters.length === 0) {
@@ -100,13 +61,13 @@ function LettersGrid({
     <div
       ref={gridRef}
       className="flex flex-1 select-none"
-      onMouseLeave={endDragSelection}
+      onMouseLeave={() => onMouseUp?.()}
     >
       <GridWidth width={size.width}>
         {letters.map((letter, index) => {
           const row = Math.floor(index / size.width);
           const col = index % size.width;
-          const isSelected = isPositionSelected(row, col);
+          const isSelected = isPositionSelected?.(row, col);
 
           return (
             <button
@@ -117,9 +78,9 @@ function LettersGrid({
                   ? "bg-blue-500 text-white hover:bg-blue-600"
                   : "hover:bg-zinc-50"
               }`}
-              onMouseDown={() => handleMouseDown(row, col)}
-              onMouseEnter={() => handleMouseEnter(row, col)}
-              onMouseUp={handleMouseUp}
+              onMouseDown={() => onMouseDown?.(row, col)}
+              onMouseEnter={() => onMouseEnter?.(row, col)}
+              onMouseUp={() => onMouseUp?.()}
             >
               <span className="text-2xl">{letter}</span>
             </button>
