@@ -6,7 +6,7 @@ export const games: Game[] = [
     title: "Weather",
     link: "/weather",
     difficulty: "easy",
-    words: ["sun", "rain", "snow", "cloud"],
+    words: ["sun", "rain", "snow"],
   },
   {
     id: 2,
@@ -20,13 +20,13 @@ export const games: Game[] = [
     title: "Colors",
     link: "/colors",
     difficulty: "easy",
-    words: ["red", "blue", "green", "yellow", "purple"],
+    words: ["red", "blue", "green"],
   },
   {
     id: 4,
     title: "Fruits",
     link: "/fruits",
     difficulty: "medium",
-    words: ["apple", "banana", "orange", "grape", "strawberry"],
+    words: ["apple", "banana", "orange", "grape", "lemon"],
   },
 ];

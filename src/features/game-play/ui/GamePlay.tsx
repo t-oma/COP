@@ -1,8 +1,10 @@
 import { useState } from "react";
 
 import { FoundWords, games } from "~/entities/game";
+import { useGridLetters } from "~/features/grid-generator";
 import { SelectableLettersGrid } from "~/features/word-selection";
 import { DifficultyNamedSizes } from "~/shared/data/data";
+import { itemsAtPositions } from "~/shared/utils/matrix";
 import { GameTimer, SidePanel } from "~/widgets";
 import type { Position } from "~/shared/types";
 
@@ -13,6 +15,8 @@ interface GamePlayProps {
 export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
   const game = games.find((g) => g.id === gameId) || games[0];
   const size = DifficultyNamedSizes[game.difficulty];
+
+  const { letters } = useGridLetters({ words: game.words, size });
 
   const [foundWords, setFoundWords] = useState<string[]>([]);
   const [selectedPositions, setSelectedPositions] = useState<Position[]>([]);
@@ -26,9 +30,17 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
   const handleSubmitWord = () => {
     if (selectedPositions.length === 0) return;
 
-    const mockWord = "test";
-    if (game.words.includes(mockWord) && !foundWords.includes(mockWord)) {
-      setFoundWords((prev) => [...prev, mockWord]);
+    const selectedWord = itemsAtPositions(letters, selectedPositions)
+      .reduce((acc, cur) => {
+        return acc + cur.join("");
+      }, "")
+      .toLowerCase();
+    console.log(selectedWord);
+    if (
+      game.words.includes(selectedWord) &&
+      !foundWords.includes(selectedWord)
+    ) {
+      setFoundWords((prev) => [...prev, selectedWord]);
     }
     setSelectedPositions([]);
     setIsSelecting(false);
@@ -75,6 +87,7 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
       <div className="flex flex-1 p-16">
         <SelectableLettersGrid
           size={size}
+          letters={letters}
           selectedPositions={selectedPositions}
           onSelectionChange={handleSelectionChange}
         />

@@ -1,2 +1,2 @@
 export { Size, NumberNamedSizes, DifficultyNamedSizes } from "./size";
-export type { Position } from "./position";
+export type { Position, Direction } from "./position";

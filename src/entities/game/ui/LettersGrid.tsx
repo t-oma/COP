@@ -1,21 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 
-import { getRandomLetter } from "~/shared/utils/utils";
 import { GridWidth } from "~/widgets";
 import type { Size } from "~/shared/types";
 
-function gridLetters({ width, height }: Size) {
-  const letters = [];
-  for (let i = 0; i < width; i++) {
-    for (let j = 0; j < height; j++) {
-      letters.push(getRandomLetter());
-    }
-  }
-  return letters;
-}
-
 interface LettersGridProps {
   size: Size;
+  letters: string[][];
   onMouseDown?: (row: number, col: number) => void;
   onMouseEnter?: (row: number, col: number) => void;
   onMouseUp?: () => void;
@@ -24,19 +14,13 @@ interface LettersGridProps {
 
 function LettersGrid({
   size,
+  letters,
   onMouseDown,
   onMouseEnter,
   onMouseUp,
   isPositionSelected,
 }: LettersGridProps) {
-  const [letters, setLetters] = useState<string[]>([]);
   const gridRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    // Generate letters only on client side to avoid hydration mismatch
-    // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect
-    setLetters(gridLetters(size));
-  }, [size]);
 
   // Show loading state or empty grid during SSR
   if (letters.length === 0) {
@@ -65,27 +49,29 @@ function LettersGrid({
       onMouseLeave={() => onMouseUp?.()}
     >
       <GridWidth width={size.width}>
-        {letters.map((letter, index) => {
-          const row = Math.floor(index / size.width);
-          const col = index % size.width;
-          const isSelected = isPositionSelected?.(row, col);
+        {letters.map((row, rowIndex) => {
+          return row.map((letter, colIndex) => {
+            const row = rowIndex;
+            const col = colIndex;
+            const isSelected = isPositionSelected?.(row, col);
 
-          return (
-            <button
-              type="button"
-              key={`letter-${row}-${col}-${letter}`}
-              className={`flex cursor-pointer items-center justify-center rounded-md transition-colors select-none ${
-                isSelected
-                  ? "bg-blue-500 text-white hover:bg-blue-600"
-                  : "hover:bg-zinc-50"
-              }`}
-              onMouseDown={() => onMouseDown?.(row, col)}
-              onMouseEnter={() => onMouseEnter?.(row, col)}
-              onMouseUp={() => onMouseUp?.()}
-            >
-              <span className="text-2xl">{letter}</span>
-            </button>
-          );
+            return (
+              <button
+                type="button"
+                key={`letter-${row}-${col}-${letter}`}
+                className={`flex cursor-pointer items-center justify-center rounded-md transition-colors select-none ${
+                  isSelected
+                    ? "bg-blue-500 text-white hover:bg-blue-600"
+                    : "hover:bg-zinc-50"
+                }`}
+                onMouseDown={() => onMouseDown?.(row, col)}
+                onMouseEnter={() => onMouseEnter?.(row, col)}
+                onMouseUp={() => onMouseUp?.()}
+              >
+                <span className="text-2xl">{letter}</span>
+              </button>
+            );
+          });
         })}
       </GridWidth>
     </div>
