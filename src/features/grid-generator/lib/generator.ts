@@ -15,33 +15,50 @@ function generateGridLetters({
   let letters: string[][] = [];
   console.log(`WORDS TO PLACE: ${words.flat()}`);
 
-  let retryLimit = 500;
   let i = 0;
-  while (i < words.length && retryLimit > 0) {
+  while (i < words.length) {
     const word = words[i];
-    const dir = getRandomDirection();
+    let placed = false;
+    let attempts = 0;
+    const maxAttempts = 100; // attempts per word
 
-    const maxRow = size.height - (dir.dr === 0 ? 1 : word.length);
-    const maxCol = size.width - (dir.dc === 0 ? 1 : word.length);
+    while (!placed && attempts < maxAttempts) {
+      const dir = getRandomDirection();
 
-    const row = clamp(Math.floor(Math.random() * size.height), 0, maxRow);
-    const col = clamp(Math.floor(Math.random() * size.width), 0, maxCol);
+      const minRow = 0;
+      const maxRow = size.height - (dir.dr === 0 ? 1 : word.length);
+      const minCol = 0;
+      const maxCol = size.width - (dir.dc === 0 ? 1 : word.length);
 
-    const { succeeded, result } = tryPlaceWord({
-      letters,
-      word,
-      size,
-      pos: { row, col },
-      dir,
-    });
-    if (succeeded) {
-      console.log(
-        `PLACED ${word} AT ${row}, ${col} WITH DIRECTION {${dir.dr},${dir.dc}}`
+      const row = clamp(
+        Math.floor(Math.random() * size.height),
+        minRow,
+        maxRow
       );
-      letters = result;
+      const col = clamp(Math.floor(Math.random() * size.width), minCol, maxCol);
+
+      const { succeeded, result } = tryPlaceWord({
+        letters,
+        word,
+        size,
+        pos: { row, col },
+        dir,
+      });
+      if (succeeded) {
+        console.log(
+          `PLACED ${word} AT ${row}, ${col} WITH DIRECTION {${dir.dr},${dir.dc}}`
+        );
+        letters = result;
+        placed = true;
+      }
+      attempts++;
+    }
+
+    if (placed) {
       i++;
     } else {
-      retryLimit--;
+      console.log(`FAILED TO PLACE ${word} after ${maxAttempts} attempts`);
+      i++; // skip this word
     }
   }
 

@@ -2,13 +2,13 @@ import { getRandomLetter } from "~/shared/utils/utils";
 import type { Direction, Size } from "~/shared/types";
 
 function getRandomDirection(): Direction {
-  const dr = Math.floor(Math.random() * 2);
-  if (dr === 0) {
-    return { dr, dc: 1 };
-  }
-  const dc = Math.floor(Math.random() * 2);
+  const directions: Direction[] = [
+    { dr: 0, dc: 1 }, // horizontal right
+    { dr: 1, dc: 0 }, // vertical down
+    { dr: 1, dc: 1 }, // diagonal down-right
+  ];
 
-  return { dr, dc };
+  return directions[Math.floor(Math.random() * directions.length)];
 }
 
 function fillRandomLetters(letters: string[][], { width, height }: Size) {
