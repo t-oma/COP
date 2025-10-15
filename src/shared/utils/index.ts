@@ -7,3 +7,4 @@ export {
   insertLine,
   itemsAtPositions,
 } from "./matrix";
+export { defineWordSet, defineUniqueSet } from "./types";
