@@ -1,7 +1,8 @@
 import { clamp } from "~/shared/utils/utils";
-import { fillRandomLetters, getRandomDirection } from "./helpers";
+import { fillRandomLetters, getWeightedDirection } from "./helpers";
 import { tryPlaceWord } from "./placement";
 import type { Size } from "~/shared/types";
+import type { DirectionCounts } from "../model/types";
 
 interface GenerateGridLettersProps {
   size: Size;
@@ -15,6 +16,12 @@ function generateGridLetters({
   let letters: string[][] = [];
   console.log(`WORDS TO PLACE: ${words.flat()}`);
 
+  const directionCounts: DirectionCounts = {
+    horizontal: 0,
+    vertical: 0,
+    diagonal: 0,
+  };
+
   let i = 0;
   while (i < words.length) {
     const word = words[i];
@@ -23,7 +30,7 @@ function generateGridLetters({
     const maxAttempts = 100; // attempts per word
 
     while (!placed && attempts < maxAttempts) {
-      const dir = getRandomDirection();
+      const dir = getWeightedDirection(directionCounts);
 
       const minRow = 0;
       const maxRow = size.height - (dir.dr === 0 ? 1 : word.length);
@@ -49,6 +56,10 @@ function generateGridLetters({
           `PLACED ${word} AT ${row}, ${col} WITH DIRECTION {${dir.dr},${dir.dc}}`
         );
         letters = result;
+        // Update direction count
+        if (dir.dr === 0 && dir.dc === 1) directionCounts.horizontal++;
+        else if (dir.dr === 1 && dir.dc === 0) directionCounts.vertical++;
+        else if (dir.dr === 1 && dir.dc === 1) directionCounts.diagonal++;
         placed = true;
       }
       attempts++;
