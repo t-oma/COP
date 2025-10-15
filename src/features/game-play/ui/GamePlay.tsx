@@ -6,6 +6,7 @@ import { SelectableLettersGrid } from "~/features/word-selection";
 import { DifficultyNamedSizes } from "~/shared/data/data";
 import { itemsAtPositions } from "~/shared/utils/matrix";
 import { GameTimer, SidePanel } from "~/widgets";
+import { GameHelp } from "./GameHelp";
 import type { Position } from "~/shared/types";
 
 interface GamePlayProps {
@@ -86,7 +87,8 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
         )}
       </SidePanel>
 
-      <div className="flex flex-1 p-16">
+      <div className="relative flex flex-1 p-16">
+        <GameHelp />
         <SelectableLettersGrid
           size={size}
           letters={letters}
