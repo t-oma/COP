@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 function GameHelp() {
   const [open, setOpen] = useState(false);
   const helpRef = useRef<HTMLDivElement>(null);
+  const helpButtonRef = useRef<HTMLButtonElement>(null);
 
   const toggleHelp = () => {
     setOpen((prev) => !prev);
@@ -14,9 +15,12 @@ function GameHelp() {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (helpRef.current && !helpRef.current.contains(event.target as Node)) {
-        closeHelp();
-      }
+      if (!helpRef.current) return;
+      if (!helpButtonRef.current) return;
+      if (helpRef.current.contains(event.target as Node)) return;
+      if (helpButtonRef.current.contains(event.target as Node)) return;
+
+      closeHelp();
     };
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -37,7 +41,7 @@ function GameHelp() {
   }, [open]);
 
   return (
-    <div className="absolute top-0 right-0 flex w-full flex-1 items-start justify-end gap-4 p-2 px-4">
+    <div className="flex items-start justify-end gap-4">
       {open && (
         <section
           className="w-full max-w-md rounded-md bg-zinc-50 p-4 shadow"
@@ -88,6 +92,7 @@ function GameHelp() {
         aria-controls="help-dialog"
         aria-label="Toggle game help"
         className="inline-flex cursor-pointer items-center justify-center rounded-full bg-white p-1 hover:shadow focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        ref={helpButtonRef}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

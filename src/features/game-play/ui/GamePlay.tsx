@@ -68,17 +68,6 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
 
         <GameTimer autoStart />
 
-        <div className="">
-          <button
-            type="button"
-            onClick={handleHint}
-            disabled={hintsUsed >= 3}
-            className="w-full rounded bg-purple-500 px-3 py-2 text-sm text-white transition-colors hover:bg-purple-600 disabled:cursor-not-allowed disabled:bg-gray-400"
-          >
-            Hint ({3 - hintsUsed} left)
-          </button>
-        </div>
-
         {/* Кнопки керування вибором */}
         {isSelecting && (
           <div className="mt-4 space-y-2">
@@ -106,7 +95,17 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
       </SidePanel>
 
       <div className="relative flex flex-1 p-16">
-        <GameHelp />
+        <div className="absolute top-0 right-0 left-0 flex items-center justify-between gap-4 p-2 px-4">
+          <button
+            type="button"
+            onClick={handleHint}
+            disabled={hintsUsed >= 3}
+            className="inline-flex cursor-pointer items-center justify-center rounded-md bg-white px-2 py-2 hover:shadow focus:ring-2 focus:ring-blue-500 focus:outline-none disabled:cursor-not-allowed disabled:bg-zinc-50 disabled:text-zinc-400"
+          >
+            <span className="text-xs">Hint ({3 - hintsUsed} left)</span>
+          </button>
+          <GameHelp />
+        </div>
         <SelectableLettersGrid
           size={size}
           letters={letters}
