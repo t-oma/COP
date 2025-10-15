@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { GameSelection } from "~/features/game-selection";
 import { Dropdown, RootLayout } from "~/widgets";
-import type { Difficulty } from "~/entities/game";
+import type { Difficulty } from "~/shared/types";
 
 const difficultyOptions = [
   { value: "all", label: "All" },

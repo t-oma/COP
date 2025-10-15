@@ -1,7 +1,4 @@
-export type Size = {
-  width: number;
-  height: number;
-};
+export type Difficulty = "easy" | "medium" | "hard";
 
 export type NumberNamedSizes = {
   "5x5": Size;

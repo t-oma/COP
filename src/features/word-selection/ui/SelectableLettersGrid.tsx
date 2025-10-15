@@ -2,10 +2,10 @@ import { useCallback, useEffect } from "react";
 
 import { LettersGrid } from "~/entities/game";
 import { useDraggableSelection } from "../lib/useDraggableSelection";
-import type { Position, Size } from "~/shared/types";
+import type { Position } from "~/shared/types";
 
 interface SelectableLettersGridProps {
-  size: Size;
+  size: number;
   letters: string[][];
   playedPositions: Position[];
   selectedPositions: Position[];

@@ -1,5 +1,5 @@
 import { games, GamesGrid } from "~/entities/game";
-import type { Difficulty } from "~/entities/game";
+import type { Difficulty } from "~/shared/types";
 
 interface GameSelectionProps {
   selectedDifficulty?: Difficulty | "all";

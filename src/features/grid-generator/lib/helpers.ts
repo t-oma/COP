@@ -1,5 +1,5 @@
 import { getRandomLetter } from "~/shared/utils";
-import type { Direction, Size } from "~/shared/types";
+import type { Direction } from "~/shared/types";
 import type { DirectionCounts } from "../model/types";
 
 function getRandomDirection(): Direction {
@@ -39,12 +39,12 @@ function getWeightedDirection(directionCounts: DirectionCounts): Direction {
   return directions[0].dir; // fallback
 }
 
-function fillRandomLetters(letters: string[][], { width, height }: Size) {
-  for (let i = 0; i < width; i++) {
+function fillRandomLetters(letters: string[][], size: number) {
+  for (let i = 0; i < size; i++) {
     if (!letters[i]) {
       letters[i] = [];
     }
-    for (let j = 0; j < height; j++) {
+    for (let j = 0; j < size; j++) {
       if (!letters[i][j]) {
         letters[i][j] = getRandomLetter();
       }

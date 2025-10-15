@@ -1,10 +1,10 @@
 import { insertLine } from "~/shared/utils";
-import type { Direction, Position, Size } from "~/shared/types";
+import type { Direction, Position } from "~/shared/types";
 
 type TryPlaceWordProps = {
   letters: string[][];
   word: string;
-  size: Size;
+  size: number;
   pos: Position;
   dir: Direction;
 };
@@ -26,8 +26,8 @@ function tryPlaceWord({
   const takenPositions: Position[] = [];
 
   if (
-    pos.row + dir.dr * word.length > size.height ||
-    pos.col + dir.dc * word.length > size.width ||
+    pos.row + dir.dr * word.length > size ||
+    pos.col + dir.dc * word.length > size ||
     pos.row + dir.dr * word.length < 0 ||
     pos.col + dir.dc * word.length < 0
   ) {
