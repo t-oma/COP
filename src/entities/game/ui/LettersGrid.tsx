@@ -8,16 +8,20 @@ interface LettersGridProps {
   size: Size;
   letters: string[][];
   playedPositions: Position[];
+  highlightedPositions?: Position[];
   onMouseDown?: (row: number, col: number) => void;
   onMouseEnter?: (row: number, col: number) => void;
   onMouseUp?: () => void;
   isPositionSelected?: (row: number, col: number) => boolean;
 }
 
+const defaultHighlightedPositions: Position[] = [];
+
 function LettersGrid({
   size,
   letters,
   playedPositions,
+  highlightedPositions = defaultHighlightedPositions,
   onMouseDown,
   onMouseEnter,
   onMouseUp,
@@ -60,6 +64,9 @@ function LettersGrid({
             const isPlayed = playedPositions.some(
               (pos: Position) => pos.row === row && pos.col === col
             );
+            const isHighlighted = highlightedPositions.some(
+              (pos: Position) => pos.row === row && pos.col === col
+            );
 
             return (
               <button
@@ -68,6 +75,7 @@ function LettersGrid({
                 className={cn(
                   "flex cursor-pointer items-center justify-center transition-colors select-none hover:bg-zinc-50",
                   {
+                    "bg-yellow-300/20 text-black": isHighlighted,
                     "bg-blue-500 text-white hover:bg-blue-600": isSelected,
                     "rounded-none bg-zinc-300": isPlayed,
                   }

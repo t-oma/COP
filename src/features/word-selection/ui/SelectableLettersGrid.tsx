@@ -9,14 +9,18 @@ interface SelectableLettersGridProps {
   letters: string[][];
   playedPositions: Position[];
   selectedPositions: Position[];
+  highlightedPositions?: Position[];
   onSelectionChange?: (positions: Position[]) => void;
 }
+
+const defaultHighlightedPositions: Position[] = [];
 
 function SelectableLettersGrid({
   size,
   letters,
   playedPositions,
   selectedPositions,
+  highlightedPositions = defaultHighlightedPositions,
   onSelectionChange,
 }: Readonly<SelectableLettersGridProps>) {
   const { startDragSelection, updateDragSelection, endDragSelection } =
@@ -66,6 +70,7 @@ function SelectableLettersGrid({
       size={size}
       letters={letters}
       playedPositions={playedPositions}
+      highlightedPositions={highlightedPositions}
       onMouseDown={handleMouseDown}
       onMouseEnter={handleMouseEnter}
       onMouseUp={handleMouseUp}

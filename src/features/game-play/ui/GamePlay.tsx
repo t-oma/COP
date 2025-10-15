@@ -6,6 +6,7 @@ import { SelectableLettersGrid } from "~/features/word-selection";
 import { DifficultyNamedSizes } from "~/shared/data/data";
 import { itemsAtPositions } from "~/shared/utils/matrix";
 import { GameTimer, SidePanel } from "~/widgets";
+import { useHint } from "../lib/useHint";
 import { GameHelp } from "./GameHelp";
 import type { Position } from "~/shared/types";
 
@@ -17,12 +18,18 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
   const game = games.find((g) => g.id === gameId) || games[0];
   const size = DifficultyNamedSizes[game.difficulty];
 
-  const { letters } = useGridLetters({ words: game.words, size });
-
   const [foundWords, setFoundWords] = useState<string[]>([]);
   const [playedPositions, setPlayedPositions] = useState<Position[]>([]);
   const [selectedPositions, setSelectedPositions] = useState<Position[]>([]);
   const [isSelecting, setIsSelecting] = useState(false);
+
+  const { letters } = useGridLetters({ words: game.words, size });
+  const { highlightedPositions, hintsUsed, handleHint } = useHint({
+    size,
+    words: game.words,
+    foundWords,
+    letters,
+  });
 
   const handleSelectionChange = (positions: Position[]) => {
     setSelectedPositions(positions);
@@ -61,6 +68,17 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
 
         <GameTimer autoStart />
 
+        <div className="">
+          <button
+            type="button"
+            onClick={handleHint}
+            disabled={hintsUsed >= 3}
+            className="w-full rounded bg-purple-500 px-3 py-2 text-sm text-white transition-colors hover:bg-purple-600 disabled:cursor-not-allowed disabled:bg-gray-400"
+          >
+            Hint ({3 - hintsUsed} left)
+          </button>
+        </div>
+
         {/* Кнопки керування вибором */}
         {isSelecting && (
           <div className="mt-4 space-y-2">
@@ -94,6 +112,7 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
           letters={letters}
           playedPositions={playedPositions}
           selectedPositions={selectedPositions}
+          highlightedPositions={highlightedPositions}
           onSelectionChange={handleSelectionChange}
         />
       </div>
