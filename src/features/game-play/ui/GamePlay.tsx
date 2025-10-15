@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { FoundWords, games } from "~/entities/game";
 import { useGridLetters } from "~/features/grid-generator";
@@ -15,13 +15,14 @@ interface GamePlayProps {
 }
 
 export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
-  const game = games.find((g) => g.id === gameId) || games[0];
-  const size = DifficultyNamedSizes[game.difficulty];
-
   const [foundWords, setFoundWords] = useState<string[]>([]);
   const [playedPositions, setPlayedPositions] = useState<Position[]>([]);
   const [selectedPositions, setSelectedPositions] = useState<Position[]>([]);
   const [isSelecting, setIsSelecting] = useState(false);
+
+  const game = games.find((g) => g.id === gameId) || games[0];
+  const size = DifficultyNamedSizes[game.difficulty];
+  const gameEnded = game.words.length === foundWords.length;
 
   const { letters } = useGridLetters({ words: game.words, size });
   const { highlightedPositions, hintsUsed, handleHint } = useHint({
@@ -62,6 +63,12 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
     setIsSelecting(false);
   };
 
+  useEffect(() => {
+    if (gameEnded) {
+      alert("Game ended");
+    }
+  }, [gameEnded]);
+
   return (
     <div className="flex flex-1">
       <SidePanel>
@@ -101,7 +108,9 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
             <button
               type="button"
               onClick={handleHint}
-              disabled={hintsUsed >= 3 || highlightedPositions.length > 0}
+              disabled={
+                hintsUsed >= 3 || highlightedPositions.length > 0 || gameEnded
+              }
               className="inline-flex cursor-pointer items-center justify-center rounded-md bg-white px-2 py-2 hover:shadow focus:ring-2 focus:ring-blue-500 focus:outline-none disabled:cursor-not-allowed disabled:bg-zinc-50 disabled:text-zinc-400"
             >
               <span className="text-xs">Hint ({3 - hintsUsed} left)</span>
