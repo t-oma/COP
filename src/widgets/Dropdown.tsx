@@ -58,11 +58,7 @@ function Dropdown({
         type="button"
         onClick={() => !disabled && setIsOpen(!isOpen)}
         disabled={disabled}
-        className={`flex w-full items-center justify-between rounded-md border border-zinc-300 bg-white px-4 py-2 text-left shadow-sm transition-colors ${
-          disabled
-            ? "cursor-not-allowed bg-zinc-50 text-zinc-400"
-            : "cursor-pointer hover:border-zinc-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
-        } `}
+        className="flex w-full cursor-pointer items-center justify-between rounded-md border border-zinc-300 bg-white px-4 py-2 text-left shadow-sm transition-colors hover:border-zinc-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none disabled:cursor-not-allowed disabled:bg-zinc-50 disabled:text-zinc-400"
       >
         <span
           className={clsx(
