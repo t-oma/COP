@@ -26,3 +26,7 @@ export function shuffle<T>(array: T[]): T[] {
   }
   return shuffled;
 }
+
+export function capitalize(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}

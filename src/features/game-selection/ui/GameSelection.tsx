@@ -1,15 +1,13 @@
 import { games, GamesGrid } from "~/entities/game";
-import type { Difficulty } from "~/shared/types";
 
 interface GameSelectionProps {
-  selectedDifficulty?: Difficulty | "all";
+  selectedSize?: number | null;
 }
 
-export function GameSelection({ selectedDifficulty }: GameSelectionProps) {
-  const filteredGames =
-    !selectedDifficulty || selectedDifficulty === "all"
-      ? games
-      : games.filter((game) => game.difficulty === selectedDifficulty);
+export function GameSelection({ selectedSize }: GameSelectionProps) {
+  const filteredGames = !selectedSize
+    ? games
+    : games.filter((game) => game.size === selectedSize);
 
   return <GamesGrid games={filteredGames} />;
 }

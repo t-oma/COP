@@ -2,17 +2,20 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import clsx from "clsx";
 import { ChevronDown } from "lucide-react";
+import { cn } from "~/shared/utils";
 
-interface DropdownOption {
-  value: string;
+export type DropdownValue = number | null;
+
+export interface DropdownOption {
+  value: DropdownValue;
   label: string;
 }
 
-interface DropdownProps {
+export interface DropdownProps {
   options: DropdownOption[];
-  value?: string;
+  value: DropdownValue;
   placeholder?: string;
-  onChange?: (value: string) => void;
+  onChange?: (value: DropdownValue) => void;
   disabled?: boolean;
   className?: string;
 }
@@ -47,13 +50,13 @@ function Dropdown({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleSelect = (optionValue: string) => {
+  const handleSelect = (optionValue: DropdownValue) => {
     onChange?.(optionValue);
     setIsOpen(false);
   };
 
   return (
-    <div ref={dropdownRef} className={`relative ${className}`}>
+    <div ref={dropdownRef} className={cn("relative", className)}>
       <button
         type="button"
         onClick={() => !disabled && setIsOpen(!isOpen)}
