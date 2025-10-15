@@ -8,6 +8,7 @@ interface UseHintProps {
   words: string[];
   foundWords: string[];
   letters: string[][];
+  hintLength?: number; // 0 for full word, otherwise first N letters
 }
 
 interface UseHintReturn {
@@ -17,13 +18,23 @@ interface UseHintReturn {
   handleHint: () => void;
 }
 
-const hitsLimit = 3;
+const hintsLimit = 3;
 
+/**
+ * Finds hints for the given word
+ *
+ * @param size - size of the grid
+ * @param words - list of all words
+ * @param foundWords - list of found words
+ * @param letters - letters grid
+ * @param hintLength - length of hint to show, 0 for full word, otherwise first N letters
+ */
 function useHint({
   size,
   words,
   foundWords,
   letters,
+  hintLength = 0,
 }: Readonly<UseHintProps>): UseHintReturn {
   const [highlightedPositions, setHighlightedPositions] = useState<Position[]>(
     []
@@ -60,7 +71,7 @@ function useHint({
   );
 
   const handleHint = useCallback(() => {
-    if (hintsUsed >= hitsLimit) return; // limit to 3 hints
+    if (hintsUsed >= hintsLimit || highlightedPositions.length > 0) return; // limit to 3 hints and prevent overlapping hints
 
     const remainingWords = words.filter((w) => !foundWords.includes(w));
     if (remainingWords.length === 0) return;
@@ -69,11 +80,20 @@ function useHint({
       remainingWords[Math.floor(Math.random() * remainingWords.length)];
     const positions = findWordPositions(randomWord);
     if (positions) {
-      setHighlightedPositions(positions);
+      const positionsToHighlight =
+        hintLength > 0 ? positions.slice(0, hintLength) : positions;
+      setHighlightedPositions(positionsToHighlight);
       setHintsUsed((prev) => prev + 1);
       setTimeout(() => setHighlightedPositions([]), 3000); // highlight for 3 seconds
     }
-  }, [findWordPositions, foundWords, hintsUsed, words]);
+  }, [
+    findWordPositions,
+    foundWords,
+    hintsUsed,
+    words,
+    hintLength,
+    highlightedPositions,
+  ]);
 
   return {
     highlightedPositions,

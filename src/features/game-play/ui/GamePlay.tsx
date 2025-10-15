@@ -29,6 +29,7 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
     words: game.words,
     foundWords,
     letters,
+    hintLength: 1,
   });
 
   const handleSelectionChange = (positions: Position[]) => {
@@ -96,14 +97,16 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
 
       <div className="relative flex flex-1 p-16">
         <div className="absolute top-0 right-0 left-0 flex items-center justify-between gap-4 p-2 px-4">
-          <button
-            type="button"
-            onClick={handleHint}
-            disabled={hintsUsed >= 3}
-            className="inline-flex cursor-pointer items-center justify-center rounded-md bg-white px-2 py-2 hover:shadow focus:ring-2 focus:ring-blue-500 focus:outline-none disabled:cursor-not-allowed disabled:bg-zinc-50 disabled:text-zinc-400"
-          >
-            <span className="text-xs">Hint ({3 - hintsUsed} left)</span>
-          </button>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={handleHint}
+              disabled={hintsUsed >= 3 || highlightedPositions.length > 0}
+              className="inline-flex cursor-pointer items-center justify-center rounded-md bg-white px-2 py-2 hover:shadow focus:ring-2 focus:ring-blue-500 focus:outline-none disabled:cursor-not-allowed disabled:bg-zinc-50 disabled:text-zinc-400"
+            >
+              <span className="text-xs">Hint ({3 - hintsUsed} left)</span>
+            </button>
+          </div>
           <GameHelp />
         </div>
         <SelectableLettersGrid
