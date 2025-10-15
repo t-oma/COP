@@ -29,4 +29,22 @@ export const games: Game[] = [
     difficulty: "medium",
     words: ["apple", "banana", "orange", "grape", "lemon"],
   },
+  {
+    id: 5,
+    title: "Animals",
+    link: "/animals",
+    difficulty: "hard",
+    words: [
+      "penguin",
+      "shrimp",
+      "octopus",
+      "dolphin",
+      "shark",
+      // "whale",
+      "oyster",
+      "turtle",
+      "lobster",
+      "seagull",
+    ],
+  },
 ];
