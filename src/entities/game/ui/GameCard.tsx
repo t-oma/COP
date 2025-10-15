@@ -1,5 +1,7 @@
 import { Link } from "react-router";
 
+import { SizeNamedDifficulties as SND } from "~/shared/data/data";
+import { capitalize } from "~/shared/utils";
 import type { Game } from "../model/types";
 
 interface GameCardProps {
@@ -15,7 +17,7 @@ export function GameCard({ game }: GameCardProps) {
     >
       <span className="text-xl">{game.title}</span>
       <span className="absolute top-0 right-0 p-4 text-base">
-        {game.difficulty}
+        {capitalize(SND[game.size])} ({game.size}x{game.size})
       </span>
     </Link>
   );

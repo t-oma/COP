@@ -1,11 +1,10 @@
 import { clamp } from "~/shared/utils";
 import { fillRandomLetters, getWeightedDirection } from "./helpers";
 import { tryPlaceWord } from "./placement";
-import type { Size } from "~/shared/types";
 import type { DirectionCounts } from "../model/types";
 
 interface GenerateGridLettersProps {
-  size: Size;
+  size: number;
   words: string[];
 }
 
@@ -33,16 +32,12 @@ function generateGridLetters({
       const dir = getWeightedDirection(directionCounts);
 
       const minRow = 0;
-      const maxRow = size.height - (dir.dr === 0 ? 1 : word.length);
+      const maxRow = size - (dir.dr === 0 ? 1 : word.length);
       const minCol = 0;
-      const maxCol = size.width - (dir.dc === 0 ? 1 : word.length);
+      const maxCol = size - (dir.dc === 0 ? 1 : word.length);
 
-      const row = clamp(
-        Math.floor(Math.random() * size.height),
-        minRow,
-        maxRow
-      );
-      const col = clamp(Math.floor(Math.random() * size.width), minCol, maxCol);
+      const row = clamp(Math.floor(Math.random() * size), minRow, maxRow);
+      const col = clamp(Math.floor(Math.random() * size), minCol, maxCol);
 
       const { succeeded, result } = tryPlaceWord({
         letters,

@@ -1,5 +1,5 @@
 export { cn } from "./cn";
-export { clamp, shuffle, getRandomLetter } from "./utils";
+export { clamp, shuffle, getRandomLetter, capitalize } from "./utils";
 export { gridLetters } from "./utils";
 export {
   mapDirection,

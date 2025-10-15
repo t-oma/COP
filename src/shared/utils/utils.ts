@@ -1,15 +1,13 @@
-import type { Size } from "../types";
-
 export function getRandomLetter() {
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const randomIndex = Math.floor(Math.random() * alphabet.length);
   return alphabet.charAt(randomIndex);
 }
 
-export function gridLetters({ width, height }: Size) {
+export function gridLetters(size: number) {
   const letters = [];
-  for (let i = 0; i < width; i++) {
-    for (let j = 0; j < height; j++) {
+  for (let i = 0; i < size; i++) {
+    for (let j = 0; j < size; j++) {
       letters.push(getRandomLetter());
     }
   }
@@ -27,4 +25,8 @@ export function shuffle<T>(array: T[]): T[] {
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
   return shuffled;
+}
+
+export function capitalize(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }

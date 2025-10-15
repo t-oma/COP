@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { FoundWords, games } from "~/entities/game";
 import { useGridLetters } from "~/features/grid-generator";
 import { SelectableLettersGrid } from "~/features/word-selection";
-import { DifficultyNamedSizes } from "~/shared/data/data";
 import { itemsAtPositions } from "~/shared/utils";
 import { GameTimer, SidePanel } from "~/widgets";
 import { useHint } from "../lib/useHint";
@@ -22,7 +21,7 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
   const [isSelecting, setIsSelecting] = useState(false);
 
   const game = games.find((g) => g.id === gameId) || games[0];
-  const size = DifficultyNamedSizes[game.difficulty];
+  const size = game.size;
   const gameEnded = game.words.length === foundWords.length;
 
   const { letters } = useGridLetters({ words: game.words, size });

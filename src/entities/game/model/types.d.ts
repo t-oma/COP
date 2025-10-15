@@ -1,9 +1,9 @@
-export type Difficulty = "easy" | "medium" | "hard";
+import type { Sizes } from "~/shared/data/data";
 
 export type Game = {
   id: number;
   title: string;
   link: string;
-  difficulty: Difficulty;
+  size: (typeof Sizes)[number];
   words: string[];
 };

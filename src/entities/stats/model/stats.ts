@@ -6,7 +6,7 @@ export const stats: Stats = {
   averageScore: 85,
   bestStreak: 12,
   totalTime: "24h 15m",
-  favoriteDifficulty: "Medium",
+  favoriteDifficulty: "medium",
 };
 
 export const recentGames: RecentGame[] = [

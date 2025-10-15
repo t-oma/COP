@@ -1,10 +1,10 @@
 import { useCallback, useState } from "react";
 
 import { previewVector } from "~/shared/utils";
-import type { Direction, Position, Size } from "~/shared/types";
+import type { Direction, Position } from "~/shared/types";
 
 interface UseHintProps {
-  size: Size;
+  size: number;
   words: string[];
   foundWords: string[];
   letters: string[][];
@@ -50,8 +50,8 @@ function useHint({
         { dr: 1, dc: 1 }, // diagonal
       ];
 
-      for (let row = 0; row < size.height; row++) {
-        for (let col = 0; col < size.width; col++) {
+      for (let row = 0; row < size; row++) {
+        for (let col = 0; col < size; col++) {
           for (const dir of directions) {
             const vector = previewVector({ row, col }, dir, word.length);
             if (vector.length !== word.length) continue;

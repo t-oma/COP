@@ -1,20 +1,22 @@
 import { useState } from "react";
 
 import { GameSelection } from "~/features/game-selection";
+import { DifficultyNamedSizes, GridNotation } from "~/shared/data/data";
 import { Dropdown, RootLayout } from "~/widgets";
-import type { Difficulty } from "~/entities/game";
+import type { DropdownOption } from "~/widgets/Dropdown";
 
-const difficultyOptions = [
-  { value: "all", label: "All" },
-  { value: "easy", label: "Easy" },
-  { value: "medium", label: "Medium" },
-  { value: "hard", label: "Hard" },
+const sizeOptions: DropdownOption[] = [
+  { value: null, label: "All" },
+  { value: DifficultyNamedSizes.easy, label: `Easy (${GridNotation.easy})` },
+  {
+    value: DifficultyNamedSizes.medium,
+    label: `Medium (${GridNotation.medium})`,
+  },
+  { value: DifficultyNamedSizes.hard, label: `Hard (${GridNotation.hard})` },
 ];
 
 function HomePage() {
-  const [selectedDifficulty, setSelectedDifficulty] = useState<
-    Difficulty | "all"
-  >("all");
+  const [selectedSize, setSelectedSize] = useState<number | null>(null);
 
   return (
     <RootLayout>
@@ -25,15 +27,15 @@ function HomePage() {
           <div className="flex items-center gap-4">
             <span className="text-sm text-zinc-600">Difficulty:</span>
             <Dropdown
-              options={difficultyOptions}
-              value={selectedDifficulty}
-              onChange={(value) => setSelectedDifficulty(value as Difficulty)}
+              options={sizeOptions}
+              value={selectedSize}
+              onChange={(value) => setSelectedSize(value)}
               className="w-32"
             />
           </div>
         </div>
 
-        <GameSelection selectedDifficulty={selectedDifficulty} />
+        <GameSelection selectedSize={selectedSize} />
       </main>
     </RootLayout>
   );

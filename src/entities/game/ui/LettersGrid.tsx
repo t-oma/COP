@@ -2,10 +2,10 @@ import { useRef } from "react";
 
 import { cn } from "~/shared/utils";
 import { GridWidth } from "~/widgets";
-import type { Position, Size } from "~/shared/types";
+import type { Position } from "~/shared/types";
 
 interface LettersGridProps {
-  size: Size;
+  size: number;
   letters: string[][];
   playedPositions: Position[];
   highlightedPositions?: Position[];
@@ -32,10 +32,10 @@ function LettersGrid({
   // Show loading state or empty grid during SSR
   if (letters.length === 0) {
     return (
-      <GridWidth width={size.width}>
-        {Array.from({ length: size.width * size.height }).map((_, index) => {
-          const row = Math.floor(index / size.width);
-          const col = index % size.width;
+      <GridWidth width={size}>
+        {Array.from({ length: size * size }).map((_, index) => {
+          const row = Math.floor(index / size);
+          const col = index % size;
           return (
             <div
               key={`placeholder-${row}-${col}`}
@@ -55,7 +55,7 @@ function LettersGrid({
       className="flex flex-1 select-none"
       onMouseLeave={() => onMouseUp?.()}
     >
-      <GridWidth width={size.width}>
+      <GridWidth width={size}>
         {letters.map((row, rowIndex) => {
           return row.map((letter, colIndex) => {
             const row = rowIndex;
