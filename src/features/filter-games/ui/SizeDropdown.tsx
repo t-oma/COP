@@ -3,31 +3,25 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import clsx from "clsx";
 import { ChevronDown } from "lucide-react";
 import { cn } from "~/shared/utils";
+import type { SizeDropdownOption, SizeDropdownValue } from "../model/types";
 
-export type DropdownValue = number | null;
-
-export interface DropdownOption {
-  value: DropdownValue;
-  label: string;
-}
-
-export interface DropdownProps {
-  options: DropdownOption[];
-  value: DropdownValue;
+export interface SizeDropdownProps {
+  options: SizeDropdownOption[];
+  value: SizeDropdownValue;
   placeholder?: string;
-  onChange?: (value: DropdownValue) => void;
+  onChange?: (value: SizeDropdownValue) => void;
   disabled?: boolean;
   className?: string;
 }
 
-function Dropdown({
+function SizeDropdown({
   options,
   value,
   placeholder = "Select option",
   onChange,
   disabled = false,
   className = "",
-}: DropdownProps) {
+}: SizeDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -50,7 +44,7 @@ function Dropdown({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleSelect = (optionValue: DropdownValue) => {
+  const handleSelect = (optionValue: SizeDropdownValue) => {
     onChange?.(optionValue);
     setIsOpen(false);
   };
@@ -101,4 +95,4 @@ function Dropdown({
   );
 }
 
-export { Dropdown };
+export { SizeDropdown };

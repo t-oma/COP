@@ -1,11 +1,12 @@
 import { useState } from "react";
 
+import { SizeDropdown } from "~/features/filter-games";
 import { GameSelection } from "~/features/game-selection";
-import { DifficultyNamedSizes, GridNotation } from "~/shared/data/data";
-import { Dropdown, RootLayout } from "~/widgets";
-import type { DropdownOption } from "~/widgets/Dropdown";
+import { DifficultyNamedSizes, GridNotation, Sizes } from "~/shared/data/data";
+import { RootLayout } from "~/widgets";
+import type { SizeDropdownOption } from "~/features/filter-games";
 
-const sizeOptions: DropdownOption[] = [
+const sizeOptions: SizeDropdownOption[] = [
   { value: null, label: "All" },
   { value: DifficultyNamedSizes.easy, label: `Easy (${GridNotation.easy})` },
   {
@@ -16,7 +17,9 @@ const sizeOptions: DropdownOption[] = [
 ];
 
 function HomePage() {
-  const [selectedSize, setSelectedSize] = useState<number | null>(null);
+  const [selectedSize, setSelectedSize] = useState<
+    (typeof Sizes)[number] | null
+  >(null);
 
   return (
     <RootLayout>
@@ -26,7 +29,7 @@ function HomePage() {
 
           <div className="flex items-center gap-4">
             <span className="text-sm text-zinc-600">Difficulty:</span>
-            <Dropdown
+            <SizeDropdown
               options={sizeOptions}
               value={selectedSize}
               onChange={(value) => setSelectedSize(value)}
