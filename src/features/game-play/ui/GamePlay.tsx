@@ -4,7 +4,7 @@ import { FoundWords, games } from "~/entities/game";
 import { useGridLetters } from "~/features/grid-generator";
 import { SelectableLettersGrid } from "~/features/word-selection";
 import { DifficultyNamedSizes } from "~/shared/data/data";
-import { itemsAtPositions } from "~/shared/utils/matrix";
+import { itemsAtPositions } from "~/shared/utils";
 import { GameTimer, SidePanel } from "~/widgets";
 import { useHint } from "../lib/useHint";
 import { GameHelp } from "./GameHelp";

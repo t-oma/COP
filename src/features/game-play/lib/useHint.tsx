@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-import { previewVector } from "~/shared/utils/matrix";
+import { previewVector } from "~/shared/utils";
 import type { Direction, Position, Size } from "~/shared/types";
 
 interface UseHintProps {

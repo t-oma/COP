@@ -1,4 +1,4 @@
-import { getRandomLetter } from "~/shared/utils/utils";
+import { getRandomLetter } from "~/shared/utils";
 import type { Direction, Size } from "~/shared/types";
 import type { DirectionCounts } from "../model/types";
 

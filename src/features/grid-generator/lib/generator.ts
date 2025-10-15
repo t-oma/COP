@@ -1,4 +1,4 @@
-import { clamp } from "~/shared/utils/utils";
+import { clamp } from "~/shared/utils";
 import { fillRandomLetters, getWeightedDirection } from "./helpers";
 import { tryPlaceWord } from "./placement";
 import type { Size } from "~/shared/types";

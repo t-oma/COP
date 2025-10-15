@@ -1,4 +1,4 @@
-import { insertLine } from "~/shared/utils/matrix";
+import { insertLine } from "~/shared/utils";
 import type { Direction, Position, Size } from "~/shared/types";
 
 type TryPlaceWordProps = {

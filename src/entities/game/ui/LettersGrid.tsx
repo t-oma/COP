@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-import { cn } from "~/shared/utils/cn";
+import { cn } from "~/shared/utils";
 import { GridWidth } from "~/widgets";
 import type { Position, Size } from "~/shared/types";
 
