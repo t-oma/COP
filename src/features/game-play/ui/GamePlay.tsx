@@ -8,6 +8,7 @@ import { itemsAtPositions } from "~/shared/utils/matrix";
 import { GameTimer, SidePanel } from "~/widgets";
 import { useHint } from "../lib/useHint";
 import { GameHelp } from "./GameHelp";
+import { SelectControls } from "./SelectControls";
 import type { Position } from "~/shared/types";
 
 interface GamePlayProps {
@@ -76,29 +77,12 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
 
         <GameTimer autoStart />
 
-        {/* Кнопки керування вибором */}
         {isSelecting && (
-          <div className="mt-4 space-y-2">
-            <div className="text-sm text-zinc-600">
-              Selected: {selectedPositions.length} letters
-            </div>
-            <div className="flex gap-2">
-              <button
-                type="button"
-                onClick={handleSubmitWord}
-                className="flex-1 rounded bg-green-500 px-3 py-1 text-sm text-white transition-colors hover:bg-green-600"
-              >
-                Submit
-              </button>
-              <button
-                type="button"
-                onClick={handleResetSelection}
-                className="flex-1 rounded bg-red-500 px-3 py-1 text-sm text-white transition-colors hover:bg-red-600"
-              >
-                Reset
-              </button>
-            </div>
-          </div>
+          <SelectControls
+            selectedLength={selectedPositions.length}
+            handleSubmitWord={handleSubmitWord}
+            handleResetSelection={handleResetSelection}
+          />
         )}
       </SidePanel>
 
