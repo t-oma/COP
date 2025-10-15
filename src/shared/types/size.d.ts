@@ -1,3 +1,5 @@
+import type { Sizes } from "../data/data";
+
 export type Difficulty = "easy" | "medium" | "hard";
 
 export type DifficultyNamedSizes = {
@@ -5,3 +7,5 @@ export type DifficultyNamedSizes = {
   medium: number;
   hard: number;
 };
+
+export type AvailableSizes = (typeof Sizes)[number];

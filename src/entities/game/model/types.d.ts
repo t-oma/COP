@@ -1,9 +1,9 @@
-import type { Sizes } from "~/shared/data/data";
+import type { AvailableSizes } from "~/shared/types";
 
 export type Game = {
   id: number;
   title: string;
   link: string;
-  size: (typeof Sizes)[number];
+  size: AvailableSizes;
   words: string[];
 };

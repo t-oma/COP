@@ -1,7 +1,8 @@
 import { games, GamesGrid } from "~/entities/game";
+import type { AvailableSizes } from "~/shared/types";
 
 interface GameSelectionProps {
-  selectedSize?: number | null;
+  selectedSize?: AvailableSizes | null;
 }
 
 export function GameSelection({ selectedSize }: GameSelectionProps) {
