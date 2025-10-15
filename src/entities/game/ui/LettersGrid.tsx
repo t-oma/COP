@@ -75,9 +75,9 @@ function LettersGrid({
                 className={cn(
                   "flex cursor-pointer items-center justify-center transition-colors select-none hover:bg-zinc-50",
                   {
-                    "bg-yellow-300/20 text-black": isHighlighted,
-                    "bg-blue-500 text-white hover:bg-blue-600": isSelected,
+                    "bg-yellow-300/50 text-black": isHighlighted,
                     "rounded-none bg-zinc-300": isPlayed,
+                    "bg-blue-500 text-white hover:bg-blue-600": isSelected,
                   }
                 )}
                 onMouseDown={() => onMouseDown?.(row, col)}
