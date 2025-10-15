@@ -19,6 +19,7 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
   const { letters } = useGridLetters({ words: game.words, size });
 
   const [foundWords, setFoundWords] = useState<string[]>([]);
+  const [playedPositions, setPlayedPositions] = useState<Position[]>([]);
   const [selectedPositions, setSelectedPositions] = useState<Position[]>([]);
   const [isSelecting, setIsSelecting] = useState(false);
 
@@ -41,6 +42,7 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
       !foundWords.includes(selectedWord)
     ) {
       setFoundWords((prev) => [...prev, selectedWord]);
+      setPlayedPositions((prev) => [...prev, ...selectedPositions]);
     }
     setSelectedPositions([]);
     setIsSelecting(false);
@@ -88,6 +90,7 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
         <SelectableLettersGrid
           size={size}
           letters={letters}
+          playedPositions={playedPositions}
           selectedPositions={selectedPositions}
           onSelectionChange={handleSelectionChange}
         />

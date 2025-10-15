@@ -7,6 +7,7 @@ import type { Position, Size } from "~/shared/types";
 interface SelectableLettersGridProps {
   size: Size;
   letters: string[][];
+  playedPositions: Position[];
   selectedPositions: Position[];
   onSelectionChange?: (positions: Position[]) => void;
 }
@@ -14,6 +15,7 @@ interface SelectableLettersGridProps {
 function SelectableLettersGrid({
   size,
   letters,
+  playedPositions,
   selectedPositions,
   onSelectionChange,
 }: Readonly<SelectableLettersGridProps>) {
@@ -63,6 +65,7 @@ function SelectableLettersGrid({
     <LettersGrid
       size={size}
       letters={letters}
+      playedPositions={playedPositions}
       onMouseDown={handleMouseDown}
       onMouseEnter={handleMouseEnter}
       onMouseUp={handleMouseUp}

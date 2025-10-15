@@ -2,7 +2,7 @@ import { games } from "~/entities/game";
 import { GamePlay } from "~/features/game-play";
 import { RootLayout } from "~/widgets";
 
-const game = games[0];
+const game = games[1];
 
 export default function GamePage() {
   return (

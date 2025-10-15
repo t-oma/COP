@@ -1,11 +1,13 @@
 import { useRef } from "react";
 
+import { cn } from "~/shared/utils/cn";
 import { GridWidth } from "~/widgets";
-import type { Size } from "~/shared/types";
+import type { Position, Size } from "~/shared/types";
 
 interface LettersGridProps {
   size: Size;
   letters: string[][];
+  playedPositions: Position[];
   onMouseDown?: (row: number, col: number) => void;
   onMouseEnter?: (row: number, col: number) => void;
   onMouseUp?: () => void;
@@ -15,6 +17,7 @@ interface LettersGridProps {
 function LettersGrid({
   size,
   letters,
+  playedPositions,
   onMouseDown,
   onMouseEnter,
   onMouseUp,
@@ -54,16 +57,21 @@ function LettersGrid({
             const row = rowIndex;
             const col = colIndex;
             const isSelected = isPositionSelected?.(row, col);
+            const isPlayed = playedPositions.some(
+              (pos: Position) => pos.row === row && pos.col === col
+            );
 
             return (
               <button
                 type="button"
                 key={`letter-${row}-${col}-${letter}`}
-                className={`flex cursor-pointer items-center justify-center rounded-md transition-colors select-none ${
-                  isSelected
-                    ? "bg-blue-500 text-white hover:bg-blue-600"
-                    : "hover:bg-zinc-50"
-                }`}
+                className={cn(
+                  "flex cursor-pointer items-center justify-center transition-colors select-none hover:bg-zinc-50",
+                  {
+                    "bg-blue-500 text-white hover:bg-blue-600": isSelected,
+                    "rounded-none bg-zinc-300": isPlayed,
+                  }
+                )}
                 onMouseDown={() => onMouseDown?.(row, col)}
                 onMouseEnter={() => onMouseEnter?.(row, col)}
                 onMouseUp={() => onMouseUp?.()}
