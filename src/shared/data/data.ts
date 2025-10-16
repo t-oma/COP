@@ -23,5 +23,5 @@ export const GridNotation = Object.freeze({
 export const WordsCountForSize: WCFS = {
   5: 3,
   7: 4,
-  9: 7,
+  9: 5,
 };

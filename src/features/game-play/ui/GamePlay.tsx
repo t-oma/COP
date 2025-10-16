@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { FoundWords, games } from "~/entities/game";
 import { useGridLetters } from "~/features/grid-generator";
 import { SelectableLettersGrid } from "~/features/word-selection";
+import { SizeNamedDifficulties } from "~/shared/data/data";
 import { itemsAtPositions } from "~/shared/utils";
 import { GameTimer, SidePanel } from "~/widgets";
+import { useGameWords } from "../lib/useGameWords";
 import { useHint } from "../lib/useHint";
 import { GameHelp } from "./GameHelp";
 import { SelectControls } from "./SelectControls";
@@ -20,14 +22,21 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
   const [selectedPositions, setSelectedPositions] = useState<Position[]>([]);
   const [isSelecting, setIsSelecting] = useState(false);
 
-  const game = games.find((g) => g.id === gameId) || games[0];
+  const game = useMemo(
+    () => games.find((g) => g.id === gameId) || games[0],
+    [gameId]
+  );
   const size = game.size;
-  const gameEnded = game.words.length === foundWords.length;
+  const difficulty = SizeNamedDifficulties[size];
+  const category = game.wordsCategory;
+  const { words } = useGameWords({ size, difficulty, category });
 
-  const { letters } = useGridLetters({ words: game.words, size });
+  const gameEnded = words.length > 0 && words.length === foundWords.length;
+
+  const { letters } = useGridLetters({ words, size });
   const { highlightedPositions, hintsUsed, handleHint } = useHint({
     size,
-    words: game.words,
+    words,
     foundWords,
     letters,
     hintLength: 1,
@@ -47,10 +56,7 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
       }, "")
       .toLowerCase();
     console.log(selectedWord);
-    if (
-      game.words.includes(selectedWord) &&
-      !foundWords.includes(selectedWord)
-    ) {
+    if (words.includes(selectedWord) && !foundWords.includes(selectedWord)) {
       setFoundWords((prev) => [...prev, selectedWord]);
       setPlayedPositions((prev) => [...prev, ...selectedPositions]);
     }
@@ -72,7 +78,7 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
   return (
     <div className="flex flex-1">
       <SidePanel>
-        <FoundWords foundWords={foundWords} totalWords={game.words} />
+        <FoundWords foundWords={foundWords} totalWords={words} />
 
         <GameTimer autoStart />
 
