@@ -9,3 +9,7 @@ export type DifficultyNamedSizes = {
 };
 
 export type AvailableSizes = (typeof Sizes)[number];
+
+export type WordsCountForSize = {
+  [key in AvailableSizes]: number;
+};

@@ -1,3 +1,5 @@
+export type WordsCategory = "animals" | "weather" | "colors";
+
 export type LibraryCategory = {
   readonly easy?: ReadonlySet<string>;
   readonly medium?: ReadonlySet<string>;
@@ -5,7 +7,5 @@ export type LibraryCategory = {
 };
 
 export type WordsLibrary = {
-  readonly animals: LibraryCategory;
-  readonly weather: LibraryCategory;
-  readonly colors: LibraryCategory;
+  readonly [key in WordsCategory]: LibraryCategory;
 };

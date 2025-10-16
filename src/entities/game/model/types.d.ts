@@ -1,4 +1,4 @@
-import type { AvailableSizes } from "~/shared/types";
+import type { AvailableSizes, WordsCategory } from "~/shared/types";
 
 export type Game = {
   id: number;
@@ -6,4 +6,5 @@ export type Game = {
   link: string;
   size: AvailableSizes;
   words: string[];
+  wordsCategory: WordsCategory;
 };
