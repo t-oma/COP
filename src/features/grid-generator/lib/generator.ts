@@ -8,11 +8,17 @@ interface GenerateGridLettersProps {
   words: string[];
 }
 
+interface GenerateGridLettersReturn {
+  letters: string[][];
+  placedWords: Set<string>;
+}
+
 function generateGridLetters({
   size,
   words,
-}: Readonly<GenerateGridLettersProps>) {
+}: Readonly<GenerateGridLettersProps>): GenerateGridLettersReturn {
   let letters: string[][] = [];
+  const placedWords = new Set<string>();
   console.log(`WORDS TO PLACE: ${words.flat()}`);
 
   const directionCounts: DirectionCounts = {
@@ -56,21 +62,23 @@ function generateGridLetters({
         else if (dir.dr === 1 && dir.dc === 0) directionCounts.vertical++;
         else if (dir.dr === 1 && dir.dc === 1) directionCounts.diagonal++;
         placed = true;
+        placedWords.add(word);
       }
       attempts++;
     }
 
-    if (placed) {
-      i++;
-    } else {
+    if (!placed) {
       console.log(`FAILED TO PLACE ${word} after ${maxAttempts} attempts`);
-      i++; // skip this word
     }
+    i++;
   }
 
   fillRandomLetters(letters, size);
 
-  return letters;
+  return {
+    letters,
+    placedWords,
+  };
 }
 
 export { generateGridLetters };
