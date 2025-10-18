@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { FoundWords, games } from "~/entities/game";
 import { useGenerator } from "~/features/grid-generator";
 import { SelectableLettersGrid } from "~/features/word-selection";
-import { SizeNamedDifficulties } from "~/shared/data/data";
 import { itemsAtPositions } from "~/shared/utils";
 import { GameTimer, SidePanel } from "~/widgets";
+import { useGame } from "../lib/useGame";
 import { useHint } from "../lib/useHint";
 import { GameHelp } from "./GameHelp";
 import { SelectControls } from "./SelectControls";
@@ -20,13 +20,11 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
   const [playedPositions, setPlayedPositions] = useState<Position[]>([]);
   const [selectedPositions, setSelectedPositions] = useState<Position[]>([]);
 
-  const game = useMemo(
-    () => games.find((g) => g.id === gameId) || games[0],
-    [gameId]
-  );
-  const size = game.size;
-  const difficulty = SizeNamedDifficulties[size];
-  const category = game.wordsCategory;
+  const { size, difficulty, category } = useGame({
+    games,
+    gameId,
+  });
+
   const isSelecting = selectedPositions.length > 0;
 
   const { words, letters } = useGenerator({ size, difficulty, category });
