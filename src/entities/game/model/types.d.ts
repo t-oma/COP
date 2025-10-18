@@ -5,6 +5,5 @@ export type Game = {
   title: string;
   link: string;
   size: AvailableSizes;
-  words: string[];
   wordsCategory: WordsCategory;
 };

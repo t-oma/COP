@@ -6,7 +6,6 @@ export const games: Game[] = [
     title: "Weather",
     link: "/weather",
     size: 5,
-    words: ["sun", "rain", "snow"],
     wordsCategory: "weather",
   },
   {
@@ -14,7 +13,6 @@ export const games: Game[] = [
     title: "Animals",
     link: "/animals",
     size: 7,
-    words: ["cat", "dog", "bird", "fish", "snake"],
     wordsCategory: "animals",
   },
   {
@@ -22,7 +20,6 @@ export const games: Game[] = [
     title: "Colors",
     link: "/colors",
     size: 5,
-    words: ["red", "blue", "green"],
     wordsCategory: "colors",
   },
   {
@@ -30,7 +27,6 @@ export const games: Game[] = [
     title: "Fruits",
     link: "/fruits",
     size: 7,
-    words: ["apple", "banana", "orange", "grape", "lemon"],
     wordsCategory: "colors",
   },
   {
@@ -38,17 +34,6 @@ export const games: Game[] = [
     title: "Animals",
     link: "/animals",
     size: 9,
-    words: [
-      "penguin",
-      "shrimp",
-      "octopus",
-      "dolphin",
-      "shark",
-      "oyster",
-      "turtle",
-      "lobster",
-      "seagull",
-    ],
     wordsCategory: "animals",
   },
 ];

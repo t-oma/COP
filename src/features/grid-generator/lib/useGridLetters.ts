@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 
 import { generateGridLetters } from "~/features/grid-generator";
-import type { Game } from "~/entities/game";
 
 interface UseGridLettersProps {
-  words: Game["words"];
+  words: string[];
   size: number;
 }
 

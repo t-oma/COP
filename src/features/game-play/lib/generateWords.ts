@@ -5,7 +5,7 @@ import type { Difficulty, WordsCategory } from "~/shared/types";
 const wordCountRanges = {
   easy: { min: 3, max: 4 },
   medium: { min: 5, max: 6 },
-  hard: { min: 7, max: 8 },
+  hard: { min: 6, max: 7 },
 };
 const wordLengthRanges = {
   easy: { min: 3 },

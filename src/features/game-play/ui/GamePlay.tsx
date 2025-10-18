@@ -20,7 +20,6 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
   const [foundWords, setFoundWords] = useState<string[]>([]);
   const [playedPositions, setPlayedPositions] = useState<Position[]>([]);
   const [selectedPositions, setSelectedPositions] = useState<Position[]>([]);
-  const [isSelecting, setIsSelecting] = useState(false);
 
   const game = useMemo(
     () => games.find((g) => g.id === gameId) || games[0],
@@ -29,6 +28,8 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
   const size = game.size;
   const difficulty = SizeNamedDifficulties[size];
   const category = game.wordsCategory;
+  const isSelecting = selectedPositions.length > 0;
+
   const { words } = useGameWords({ size, difficulty, category });
 
   const gameEnded = words.length > 0 && words.length === foundWords.length;
@@ -44,7 +45,6 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
 
   const handleSelectionChange = (positions: Position[]) => {
     setSelectedPositions(positions);
-    setIsSelecting(positions.length > 0);
   };
 
   const handleSubmitWord = () => {
@@ -61,12 +61,10 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
       setPlayedPositions((prev) => [...prev, ...selectedPositions]);
     }
     setSelectedPositions([]);
-    setIsSelecting(false);
   };
 
   const handleResetSelection = () => {
     setSelectedPositions([]);
-    setIsSelecting(false);
   };
 
   useEffect(() => {
