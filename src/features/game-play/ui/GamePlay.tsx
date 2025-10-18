@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { FoundWords, games } from "~/entities/game";
 import { useGenerator } from "~/features/grid-generator";
@@ -30,8 +30,6 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
   const isSelecting = selectedPositions.length > 0;
 
   const { words, letters } = useGenerator({ size, difficulty, category });
-  const gameEnded = words.length > 0 && words.length === foundWords.length;
-
   const { highlightedPositions, hintsUsed, handleHint } = useHint({
     size,
     words,
@@ -40,11 +38,14 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
     hintLength: 1,
   });
 
+  const gameEnded = words.length > 0 && words.length === foundWords.length;
+
   const handleSelectionChange = (positions: Position[]) => {
     setSelectedPositions(positions);
   };
 
-  const handleSubmitWord = () => {
+  const handleSubmitWord = useCallback(() => {
+    console.log("handleSubmitWord");
     if (selectedPositions.length === 0) return;
 
     const selectedWord = itemsAtPositions(letters, selectedPositions)
@@ -52,23 +53,40 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
         return acc + cur.join("");
       }, "")
       .toLowerCase();
-    console.log(selectedWord);
+
     if (words.includes(selectedWord) && !foundWords.includes(selectedWord)) {
       setFoundWords((prev) => [...prev, selectedWord]);
       setPlayedPositions((prev) => [...prev, ...selectedPositions]);
     }
     setSelectedPositions([]);
-  };
+  }, [foundWords, selectedPositions, words, letters]);
 
-  const handleResetSelection = () => {
+  const handleResetSelection = useCallback(() => {
+    console.log("handleResetSelection");
     setSelectedPositions([]);
-  };
+  }, []);
 
   useEffect(() => {
     if (gameEnded) {
       alert("Game ended");
     }
   }, [gameEnded]);
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Enter") {
+        handleSubmitWord();
+      }
+      if (e.key === "Escape") {
+        handleResetSelection();
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [handleSubmitWord, handleResetSelection]);
 
   return (
     <div className="flex flex-1">
