@@ -1,5 +1,14 @@
 import { games, GamesGrid } from "~/entities/game";
+import type { AvailableSizes } from "~/shared/types";
 
-export function GameSelection() {
-  return <GamesGrid games={games} />;
+interface GameSelectionProps {
+  selectedSize?: AvailableSizes | null;
+}
+
+export function GameSelection({ selectedSize }: GameSelectionProps) {
+  const filteredGames = !selectedSize
+    ? games
+    : games.filter((game) => game.size === selectedSize);
+
+  return <GamesGrid games={filteredGames} />;
 }

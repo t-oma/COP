@@ -1,5 +1,5 @@
-import type { Game } from "../model/types";
 import { GameCard } from "./GameCard";
+import type { Game } from "../model/types";
 
 interface GamesGridProps {
   games: Game[];

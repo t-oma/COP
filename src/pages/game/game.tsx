@@ -1,14 +1,10 @@
-import { FoundWords, games, LettersGrid } from "~/entities/game";
-import { DifficultyNamedSizes } from "~/shared/data/data";
+import { games } from "~/entities/game";
+import { GamePlay } from "~/features/game-play";
 import { RootLayout } from "~/widgets";
 
-const game = games[0];
-const size = DifficultyNamedSizes[game.difficulty];
+const game = games[1];
 
 export default function GamePage() {
-  // TODO: This should come from game state management
-  const foundWords: string[] = [];
-
   return (
     <RootLayout>
       <main className="flex flex-1 flex-col">
@@ -16,13 +12,7 @@ export default function GamePage() {
           <h1 className="text-xl font-semibold">{game.title}</h1>
         </div>
 
-        <div className="flex flex-1">
-          <FoundWords foundWords={foundWords} totalWords={game.words} />
-
-          <div className="flex flex-1 p-16">
-            <LettersGrid size={size} />
-          </div>
-        </div>
+        <GamePlay gameId={game.id} />
       </main>
     </RootLayout>
   );

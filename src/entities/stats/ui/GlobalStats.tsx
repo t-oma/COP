@@ -1,5 +1,5 @@
-import type { Stats } from "../model/types";
 import { StatCard } from "./StatCard";
+import type { Stats } from "../model/types";
 
 interface GlobalStatsProps {
   stats: Stats;
