@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import { Check } from "lucide-react";
 import { RemainingWords } from "./RemainingWords";
 
@@ -47,4 +49,6 @@ function FoundWords({
   );
 }
 
-export { FoundWords };
+const FoundWordsMemo = memo(FoundWords);
+
+export { FoundWordsMemo as FoundWords };

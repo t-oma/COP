@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 
 function GameHelp() {
   const [open, setOpen] = useState(false);
@@ -113,4 +113,6 @@ function GameHelp() {
   );
 }
 
-export { GameHelp };
+const GameHelpMemo = memo(GameHelp);
+
+export { GameHelpMemo as GameHelp };

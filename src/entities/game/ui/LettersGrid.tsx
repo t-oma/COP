@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 
 import { cn } from "~/shared/utils";
 import { GridWidth } from "~/widgets";
@@ -9,25 +9,35 @@ interface LettersGridProps {
   letters: string[][];
   playedPositions: Position[];
   highlightedPositions?: Position[];
+  selectedPositions?: Position[];
   onMouseDown?: (row: number, col: number) => void;
   onMouseEnter?: (row: number, col: number) => void;
   onMouseUp?: () => void;
-  isPositionSelected?: (row: number, col: number) => boolean;
 }
 
 const defaultHighlightedPositions: Position[] = [];
+const defaultSelectedPositions: Position[] = [];
 
 function LettersGrid({
   size,
   letters,
   playedPositions,
   highlightedPositions = defaultHighlightedPositions,
+  selectedPositions = defaultSelectedPositions,
   onMouseDown,
   onMouseEnter,
   onMouseUp,
-  isPositionSelected,
 }: LettersGridProps) {
   const gridRef = useRef<HTMLDivElement>(null);
+
+  const isPositionSelected = useCallback(
+    (row: number, col: number) => {
+      return selectedPositions.some(
+        (pos: Position) => pos.row === row && pos.col === col
+      );
+    },
+    [selectedPositions]
+  );
 
   // Show loading state or empty grid during SSR
   if (letters.length === 0) {
@@ -71,7 +81,7 @@ function LettersGrid({
             return (
               <button
                 type="button"
-                key={`letter-${row}-${col}-${letter}`}
+                key={`letter-${row}-${col}`}
                 className={cn(
                   "flex cursor-pointer items-center justify-center transition-colors select-none hover:bg-zinc-50",
                   {

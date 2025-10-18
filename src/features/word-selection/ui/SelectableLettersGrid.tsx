@@ -28,15 +28,6 @@ function SelectableLettersGrid({
       onSelectionChange,
     });
 
-  const isPositionSelected = useCallback(
-    (row: number, col: number) => {
-      return selectedPositions.some(
-        (pos: Position) => pos.row === row && pos.col === col
-      );
-    },
-    [selectedPositions]
-  );
-
   const handleMouseDown = useCallback(
     (row: number, col: number) => {
       startDragSelection(row, col);
@@ -71,10 +62,10 @@ function SelectableLettersGrid({
       letters={letters}
       playedPositions={playedPositions}
       highlightedPositions={highlightedPositions}
+      selectedPositions={selectedPositions}
       onMouseDown={handleMouseDown}
       onMouseEnter={handleMouseEnter}
       onMouseUp={handleMouseUp}
-      isPositionSelected={isPositionSelected}
     />
   );
 }
