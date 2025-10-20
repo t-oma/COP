@@ -1,18 +1,18 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { FoundWords, games } from "~/entities/game";
+import { useGameSettings } from "~/features/game-settings";
 import { useGenerator } from "~/features/grid-generator";
 import { SelectableLettersGrid } from "~/features/word-selection";
 import { itemsAtPositions } from "~/shared/utils";
 import { GameTimer, SidePanel } from "~/widgets";
-import { useGame } from "../lib/useGame";
 import { useHint } from "../lib/useHint";
 import { GameHelp } from "./GameHelp";
 import { SelectControls } from "./SelectControls";
 import type { Position } from "~/shared/types";
 
 interface GamePlayProps {
-  gameId?: number;
+  gameId: number;
 }
 
 export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
@@ -20,12 +20,15 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
   const [playedPositions, setPlayedPositions] = useState<Position[]>([]);
   const [selectedPositions, setSelectedPositions] = useState<Position[]>([]);
 
-  const { size, difficulty, category } = useGame({
-    games,
-    gameId,
-  });
+  const { settings } = useGameSettings();
 
-  const isSelecting = selectedPositions.length > 0;
+  const game = useMemo(
+    () => games.find((g) => g.id === gameId) || games[0],
+    [gameId]
+  );
+  const size = settings.gridSize;
+  const difficulty = settings.difficulty;
+  const category = game.wordsCategory;
 
   const { words, letters } = useGenerator({ size, difficulty, category });
   const { highlightedPositions, hintsUsed, handleHint } = useHint({
@@ -33,9 +36,10 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
     words,
     foundWords,
     letters,
-    hintLength: 1,
+    hintLength: settings.hintLength,
   });
 
+  const isSelecting = selectedPositions.length > 0;
   const gameEnded = words.length > 0 && words.length === foundWords.length;
 
   const handleSelectionChange = (positions: Position[]) => {
