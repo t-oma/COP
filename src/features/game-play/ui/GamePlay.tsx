@@ -1,18 +1,20 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { FoundWords, games } from "~/entities/game";
+import { useGameSettings } from "~/features/game-settings";
 import { useGenerator } from "~/features/grid-generator";
+import { ResultsModal } from "~/features/results-modal";
 import { SelectableLettersGrid } from "~/features/word-selection";
+import { useTimer } from "~/shared/hooks";
 import { itemsAtPositions } from "~/shared/utils";
 import { GameTimer, SidePanel } from "~/widgets";
-import { useGame } from "../lib/useGame";
 import { useHint } from "../lib/useHint";
 import { GameHelp } from "./GameHelp";
 import { SelectControls } from "./SelectControls";
 import type { Position } from "~/shared/types";
 
 interface GamePlayProps {
-  gameId?: number;
+  gameId: number;
 }
 
 export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
@@ -20,12 +22,17 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
   const [playedPositions, setPlayedPositions] = useState<Position[]>([]);
   const [selectedPositions, setSelectedPositions] = useState<Position[]>([]);
 
-  const { size, difficulty, category } = useGame({
-    games,
-    gameId,
-  });
+  const { settings } = useGameSettings();
 
-  const isSelecting = selectedPositions.length > 0;
+  const game = useMemo(
+    () => games.find((g) => g.id === gameId) || games[0],
+    [gameId]
+  );
+  const size = settings.gridSize;
+  const difficulty = settings.difficulty;
+  const category = game.wordsCategory;
+
+  const timer = useTimer(0);
 
   const { words, letters } = useGenerator({ size, difficulty, category });
   const { highlightedPositions, hintsUsed, handleHint } = useHint({
@@ -33,10 +40,19 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
     words,
     foundWords,
     letters,
-    hintLength: 1,
+    hintLength: settings.hintLength,
   });
 
+  const isSelecting = selectedPositions.length > 0;
   const gameEnded = words.length > 0 && words.length === foundWords.length;
+
+  useEffect(() => {
+    if (gameEnded) {
+      timer.pause();
+    } else {
+      timer.start();
+    }
+  }, [gameEnded, timer]);
 
   const handleSelectionChange = (positions: Position[]) => {
     setSelectedPositions(positions);
@@ -65,12 +81,6 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
   }, []);
 
   useEffect(() => {
-    if (gameEnded) {
-      alert("Game ended");
-    }
-  }, [gameEnded]);
-
-  useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Enter") {
         handleSubmitWord();
@@ -88,10 +98,17 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
 
   return (
     <div className="flex flex-1">
+      <ResultsModal
+        open={gameEnded}
+        formattedTime={timer.formatTime()}
+        foundWords={foundWords}
+        totalWords={words}
+      />
+
       <SidePanel>
         <FoundWords foundWords={foundWords} totalWords={words} />
 
-        <GameTimer autoStart />
+        <GameTimer timer={timer} />
 
         {isSelecting && (
           <SelectControls

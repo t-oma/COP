@@ -1,20 +1,10 @@
-import { useEffect } from "react";
-
-import { useTimer } from "~/shared/hooks";
+import type { UseTimerReturn } from "~/shared/hooks";
 
 interface GameTimerProps {
-  autoStart?: boolean;
+  timer: UseTimerReturn;
 }
 
-function GameTimer({ autoStart = false }: Readonly<GameTimerProps>) {
-  const timer = useTimer();
-
-  useEffect(() => {
-    if (autoStart) {
-      timer.start();
-    }
-  }, [timer, autoStart]);
-
+function GameTimer({ timer }: Readonly<GameTimerProps>) {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-col items-center justify-center gap-1">
