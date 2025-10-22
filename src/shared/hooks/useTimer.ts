@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-interface UseTimerReturn {
+export interface UseTimerReturn {
   time: number;
   isRunning: boolean;
   start: () => void;
