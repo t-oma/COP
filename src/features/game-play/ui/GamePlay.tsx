@@ -100,7 +100,7 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
     <div className="flex flex-1">
       <ResultsModal
         open={gameEnded}
-        formattedTime={timer.formatTime()}
+        timer={timer}
         foundWords={foundWords}
         totalWords={words}
       />

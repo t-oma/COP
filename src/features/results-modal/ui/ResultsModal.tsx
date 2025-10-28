@@ -2,17 +2,18 @@ import { memo } from "react";
 import { useNavigate } from "react-router";
 
 import { AppModal } from "~/widgets";
+import type { UseTimerReturn } from "~/shared/hooks";
 import type { AppModalProps } from "~/widgets";
 
 type ResultsModalProps = Pick<AppModalProps, "open"> & {
-  formattedTime: string;
+  timer: UseTimerReturn;
   foundWords: string[];
   totalWords: string[];
 };
 
 function ResultsModal({
   open,
-  formattedTime,
+  timer,
   foundWords,
   totalWords,
 }: Readonly<ResultsModalProps>) {
@@ -34,7 +35,7 @@ function ResultsModal({
         <div className="flex flex-col gap-4">
           <div className="text-center">
             <div className="font-mono text-3xl font-bold text-zinc-900">
-              {formattedTime}
+              {timer.formatTime()}
             </div>
             <div className="text-sm text-zinc-500">Time</div>
           </div>
