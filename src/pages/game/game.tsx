@@ -1,10 +1,22 @@
-import { games } from "~/entities/game";
 import { GamePlay } from "~/features/game-play";
 import { RootLayout } from "~/widgets";
+import type { Game } from "~/entities/game";
 
-const game = games[1];
+interface GamePageProps {
+  game?: Game;
+}
 
-export default function GamePage() {
+export default function GamePage({ game }: Readonly<GamePageProps>) {
+  if (!game) {
+    return (
+      <RootLayout>
+        <main className="flex flex-1 flex-col">
+          <h1>Game not found</h1>
+        </main>
+      </RootLayout>
+    );
+  }
+
   return (
     <RootLayout>
       <main className="flex flex-1 flex-col">

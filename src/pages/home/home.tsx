@@ -1,44 +1,29 @@
-import { useState } from "react";
-
-import { SizeDropdown } from "~/features/filter-games";
 import { GameSelection } from "~/features/game-selection";
-import { DifficultyNamedSizes, GridNotation, Sizes } from "~/shared/data/data";
 import { RootLayout } from "~/widgets";
-import type { SizeDropdownOption } from "~/features/filter-games";
-
-const sizeOptions: SizeDropdownOption[] = [
-  { value: null, label: "All" },
-  { value: DifficultyNamedSizes.easy, label: `Easy (${GridNotation.easy})` },
-  {
-    value: DifficultyNamedSizes.medium,
-    label: `Medium (${GridNotation.medium})`,
-  },
-  { value: DifficultyNamedSizes.hard, label: `Hard (${GridNotation.hard})` },
-];
 
 function HomePage() {
-  const [selectedSize, setSelectedSize] = useState<
-    (typeof Sizes)[number] | null
-  >(null);
-
   return (
     <RootLayout>
-      <main className="flex flex-1 flex-col px-10 pb-14">
-        <div className="flex items-center justify-between py-4">
-          <h1 className="text-xl font-semibold">Categories</h1>
-
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-zinc-600">Difficulty:</span>
-            <SizeDropdown
-              options={sizeOptions}
-              value={selectedSize}
-              onChange={(value) => setSelectedSize(value)}
-              className="w-32"
-            />
+      <main className="flex flex-1 flex-col items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 p-6">
+        <div className="w-full max-w-4xl">
+          <div className="mb-12 text-center">
+            <h1 className="mb-4 text-4xl font-bold text-gray-900 md:text-5xl">
+              Word Search
+            </h1>
+            <p className="text-lg text-gray-600 md:text-xl">
+              Challenge yourself with fun word search puzzles across different
+              categories
+            </p>
           </div>
-        </div>
 
-        <GameSelection selectedSize={selectedSize} />
+          <div className="mb-8">
+            <h2 className="mb-6 text-2xl font-semibold text-gray-800 md:text-3xl">
+              Choose a Category
+            </h2>
+          </div>
+
+          <GameSelection />
+        </div>
       </main>
     </RootLayout>
   );

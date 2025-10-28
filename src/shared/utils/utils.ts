@@ -30,3 +30,9 @@ export function shuffle<T>(array: T[]): T[] {
 export function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+export function parseIntSafe(v: string | null): number | null {
+  if (v == null) return null;
+  const n = Number(v);
+  return Number.isFinite(n) && Number.isInteger(n) && n >= 0 ? n : null;
+}

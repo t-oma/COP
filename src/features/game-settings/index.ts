@@ -4,3 +4,4 @@ export { GameSettingsProvider, useGameSettings } from "./lib/settingsProvider";
 export type { State, Action } from "./lib/settingsReducer";
 export { reducer } from "./lib/settingsReducer";
 export { defaultSettings, initialState } from "./lib/defaults";
+export { useSettingsGuard } from "./lib/useSettingsGuard";
