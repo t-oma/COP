@@ -62,7 +62,7 @@ function SettingsModal({
   }, [onClose, open]);
 
   return (
-    <AppModal open={open} closeOnBackdropClick={true} onClose={onClose}>
+    <AppModal open={open} closeOnBackdropClick closeOnEsc onClose={onClose}>
       <h2 className="mb-4 text-xl font-semibold">Configure Game</h2>
 
       <AppForm onSubmit={handleSubmit(onSubmit)}>

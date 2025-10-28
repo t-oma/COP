@@ -14,7 +14,7 @@ export function GameCard({ game }: GameCardProps) {
     <button
       type="button"
       onClick={() => setShowSettings(true)}
-      className="relative flex flex-col items-center justify-center gap-2 rounded-lg bg-zinc-50 p-4 shadow-sm hover:bg-zinc-100"
+      className="group relative overflow-hidden rounded-xl bg-gradient-to-br p-6 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl focus:ring-4 focus:ring-blue-300 focus:outline-none"
     >
       <SettingsModal
         open={showSettings}
@@ -22,7 +22,16 @@ export function GameCard({ game }: GameCardProps) {
         onClose={() => setShowSettings(false)}
       />
 
-      <span className="text-xl">{game.title}</span>
+      <div className="flex flex-col items-center justify-center gap-3">
+        <div className="text-4xl transition-transform duration-300 group-hover:scale-110">
+          {game.icon}
+        </div>
+        <div className="text-center">
+          <h3 className="text-lg font-bold">{game.title}</h3>
+        </div>
+      </div>
+
+      <div className="absolute inset-0 bg-white opacity-0 transition-opacity duration-300 group-hover:opacity-10" />
     </button>
   );
 }
