@@ -38,7 +38,9 @@ function SettingsModal({
   const onSubmit: SubmitHandler<SettingsModalFormData> = (data) => {
     updateSettings(gameId, data);
     onClose?.();
-    navigate(`/games/${gameId}`);
+    navigate(
+      `/games/${gameId}/?difficulty=${data.difficulty}&hintLength=${data.hintLength}`
+    );
   };
 
   useEffect(() => {
