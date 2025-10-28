@@ -1,3 +1,4 @@
+import { games } from "~/entities/game";
 import GamePage from "~/pages/game/game";
 import type { Route } from "./+types/game";
 
@@ -9,6 +10,10 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-export default function GameRoute() {
-  return <GamePage />;
+export async function loader({ params }: Route.LoaderArgs) {
+  return { game: games.find((g) => g.id === Number(params.id)) };
+}
+
+export default function GameRoute({ loaderData }: Route.ComponentProps) {
+  return <GamePage game={loaderData.game} />;
 }
