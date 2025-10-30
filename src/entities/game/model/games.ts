@@ -26,14 +26,7 @@ export const games: Game[] = [
     id: 4,
     title: "Fruits",
     link: "/fruits",
-    wordsCategory: "colors",
+    wordsCategory: "fruits",
     icon: "🍎",
-  },
-  {
-    id: 5,
-    title: "Animals",
-    link: "/animals",
-    wordsCategory: "animals",
-    icon: "🐾",
   },
 ];

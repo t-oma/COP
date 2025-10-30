@@ -1,4 +1,4 @@
-export type WordsCategory = "animals" | "weather" | "colors";
+export type WordsCategory = "animals" | "weather" | "colors" | "fruits";
 
 export type LibraryCategory = {
   readonly easy?: ReadonlySet<string>;
