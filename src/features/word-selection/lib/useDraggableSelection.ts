@@ -2,18 +2,19 @@ import { useCallback, useState } from "react";
 
 import type { Position } from "~/shared/types";
 
-interface UseDraggableSelectionReturn {
+type UseDraggableSelectionReturn = {
   isDragging: boolean;
   dragStart: Position | null;
   startDragSelection: (row: number, col: number) => void;
   updateDragSelection: (row: number, col: number) => void;
   endDragSelection: () => void;
   resetSelection: () => void;
-}
+};
 
-interface UseDraggableSelectionProps {
+type UseDraggableSelectionProps = {
   onSelectionChange?: (positions: Position[]) => void;
-}
+};
+
 function useDraggableSelection({
   onSelectionChange,
 }: UseDraggableSelectionProps): UseDraggableSelectionReturn {
@@ -65,6 +66,7 @@ function useDraggableSelection({
 }
 
 export { useDraggableSelection };
+export type { UseDraggableSelectionReturn, UseDraggableSelectionProps };
 
 /**
  * Calculates positions for a straight line selection (horizontal, vertical, or diagonal)

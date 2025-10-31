@@ -4,16 +4,16 @@ import { generateWords } from "~/features/game-play";
 import { generateGridLetters } from "./generator";
 import type { Difficulty, WordsCategory } from "~/shared/types";
 
-interface UseGeneratorProps {
+type UseGeneratorProps = {
   size: number;
   difficulty: Difficulty;
   category?: WordsCategory;
-}
+};
 
-interface UseGeneratorReturn {
+type UseGeneratorReturn = {
   words: string[];
   letters: string[][];
-}
+};
 
 function useGenerator({
   size,
@@ -39,3 +39,4 @@ function useGenerator({
 }
 
 export { useGenerator };
+export type { UseGeneratorProps, UseGeneratorReturn };

@@ -1,4 +1,4 @@
-import { HomePage } from "~/pages/home/home";
+import HomePage from "~/pages/home/home";
 import type { Route } from "./+types/home";
 
 // eslint-disable-next-line

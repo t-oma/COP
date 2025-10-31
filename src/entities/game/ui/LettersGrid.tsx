@@ -4,7 +4,7 @@ import { cn } from "~/shared/utils";
 import { GridWidth } from "~/widgets";
 import type { Position } from "~/shared/types";
 
-interface LettersGridProps {
+type LettersGridProps = {
   size: number;
   letters: string[][];
   playedPositions: Position[];
@@ -13,7 +13,7 @@ interface LettersGridProps {
   onMouseDown?: (row: number, col: number) => void;
   onMouseEnter?: (row: number, col: number) => void;
   onMouseUp?: () => void;
-}
+};
 
 const defaultHighlightedPositions: Position[] = [];
 const defaultSelectedPositions: Position[] = [];

@@ -3,15 +3,15 @@ import { fillRandomLetters, getWeightedDirection } from "./helpers";
 import { tryPlaceWord } from "./placement";
 import type { DirectionCounts } from "../model/types";
 
-interface GenerateGridLettersProps {
+type GenerateGridLettersProps = {
   size: number;
   words: string[];
-}
+};
 
-interface GenerateGridLettersReturn {
+type GenerateGridLettersReturn = {
   letters: string[][];
   placedWords: Set<string>;
-}
+};
 
 function generateGridLetters({
   size,
@@ -82,3 +82,4 @@ function generateGridLetters({
 }
 
 export { generateGridLetters };
+export type { GenerateGridLettersProps, GenerateGridLettersReturn };

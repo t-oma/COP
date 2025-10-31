@@ -1,7 +1,7 @@
 import { GameSelection } from "~/features/game-selection";
 import { RootLayout } from "~/widgets";
 
-function HomePage() {
+export default function HomePage() {
   return (
     <RootLayout>
       <main className="flex flex-1 flex-col items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 p-6">
@@ -28,5 +28,3 @@ function HomePage() {
     </RootLayout>
   );
 }
-
-export { HomePage };

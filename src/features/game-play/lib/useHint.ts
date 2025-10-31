@@ -3,20 +3,20 @@ import { useCallback, useState } from "react";
 import { previewVector } from "~/shared/utils";
 import type { Direction, Position } from "~/shared/types";
 
-interface UseHintProps {
+type UseHintProps = {
   size: number;
   words: string[];
   foundWords: string[];
   letters: string[][];
   hintLength?: number; // 0 for full word, otherwise first N letters
-}
+};
 
-interface UseHintReturn {
+type UseHintReturn = {
   highlightedPositions: Position[];
   hintsUsed: number;
   findWordPositions: (word: string) => Position[] | null;
   handleHint: () => void;
-}
+};
 
 const hintsLimit = 3;
 
@@ -104,3 +104,4 @@ function useHint({
 }
 
 export { useHint };
+export type { UseHintProps, UseHintReturn };

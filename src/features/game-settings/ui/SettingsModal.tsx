@@ -112,10 +112,10 @@ function SettingsModal({
   );
 }
 
-interface AppFormProps {
+type AppFormProps = {
   onSubmit: React.FormEventHandler<HTMLFormElement>;
   children: React.ReactNode;
-}
+};
 
 function AppForm({ onSubmit, children }: Readonly<AppFormProps>) {
   return (
@@ -125,11 +125,11 @@ function AppForm({ onSubmit, children }: Readonly<AppFormProps>) {
   );
 }
 
-interface AppFormFieldProps {
+type AppFormFieldProps = {
   label: string;
   htmlFor?: string;
   children: React.ReactNode;
-}
+};
 
 function AppFormField({
   label,

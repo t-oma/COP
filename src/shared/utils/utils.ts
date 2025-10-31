@@ -1,3 +1,6 @@
+export const isBrowser =
+  typeof window !== "undefined" && typeof window.localStorage !== "undefined";
+
 export function getRandomLetter() {
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const randomIndex = Math.floor(Math.random() * alphabet.length);

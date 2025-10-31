@@ -1,14 +1,14 @@
-interface SelectControlsProps {
+type SelectControlsProps = {
   selectedLength: number;
   handleSubmitWord: () => void;
   handleResetSelection: () => void;
-}
+};
 
 function SelectControls({
   selectedLength,
   handleSubmitWord,
   handleResetSelection,
-}: SelectControlsProps) {
+}: Readonly<SelectControlsProps>) {
   return (
     <div className="mt-4 space-y-2">
       <div className="text-sm text-zinc-600">

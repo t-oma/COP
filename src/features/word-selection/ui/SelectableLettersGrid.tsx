@@ -4,14 +4,14 @@ import { LettersGrid } from "~/entities/game";
 import { useDraggableSelection } from "../lib/useDraggableSelection";
 import type { Position } from "~/shared/types";
 
-interface SelectableLettersGridProps {
+type SelectableLettersGridProps = {
   size: number;
   letters: string[][];
   playedPositions: Position[];
   selectedPositions: Position[];
   highlightedPositions?: Position[];
   onSelectionChange?: (positions: Position[]) => void;
-}
+};
 
 const defaultHighlightedPositions: Position[] = [];
 
