@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
-import { isBrowser } from "~/shared/hooks/useLocalStorage";
+import { isBrowser } from "~/shared/utils";
 
 function getFocusableElements(container: HTMLElement | null): HTMLElement[] {
   if (!container) return [];

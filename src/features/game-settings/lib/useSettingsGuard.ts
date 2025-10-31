@@ -13,7 +13,7 @@ type UseSettingsGuardReturn = {
   ready: boolean;
 };
 
-export function useSettingsGuard({
+function useSettingsGuard({
   gameId,
 }: Readonly<UseSettingsGuardProps>): UseSettingsGuardReturn {
   const [status, setStatus] = useState<Status>("pending");
@@ -56,3 +56,6 @@ export function useSettingsGuard({
 
   return { status, ready: status === "ok" };
 }
+
+export { useSettingsGuard };
+export type { Status, UseSettingsGuardProps, UseSettingsGuardReturn };

@@ -1,8 +1,8 @@
 import type { UseTimerReturn } from "~/shared/hooks";
 
-interface GameTimerProps {
+type GameTimerProps = {
   timer: UseTimerReturn;
-}
+};
 
 function GameTimer({ timer }: Readonly<GameTimerProps>) {
   return (

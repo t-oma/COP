@@ -5,15 +5,15 @@ import { RemainingWords } from "./RemainingWords";
 
 const EMPTY_ARRAY: string[] = [];
 
-interface FoundWordsProps {
+type FoundWordsProps = {
   foundWords?: string[];
   totalWords?: string[];
-}
+};
 
 function FoundWords({
   foundWords = EMPTY_ARRAY,
   totalWords = EMPTY_ARRAY,
-}: FoundWordsProps) {
+}: Readonly<FoundWordsProps>) {
   const remainingWords = totalWords.filter(
     (word) => !foundWords.includes(word)
   );

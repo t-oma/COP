@@ -13,9 +13,9 @@ import { GameHelp } from "./GameHelp";
 import { SelectControls } from "./SelectControls";
 import type { Position } from "~/shared/types";
 
-interface GamePlayProps {
+type GamePlayProps = {
   gameId: number;
-}
+};
 
 export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
   const [foundWords, setFoundWords] = useState<string[]>([]);
@@ -54,9 +54,9 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
     }
   }, [gameEnded, timer]);
 
-  const handleSelectionChange = (positions: Position[]) => {
+  const handleSelectionChange = useCallback((positions: Position[]) => {
     setSelectedPositions(positions);
-  };
+  }, []);
 
   const handleSubmitWord = useCallback(() => {
     console.log("handleSubmitWord");

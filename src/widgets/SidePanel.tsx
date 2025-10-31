@@ -1,6 +1,6 @@
-interface SidePanelProps {
+type SidePanelProps = {
   children: React.ReactNode;
-}
+};
 
 function SidePanel({ children }: Readonly<SidePanelProps>) {
   return (

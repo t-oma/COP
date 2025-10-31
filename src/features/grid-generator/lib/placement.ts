@@ -77,3 +77,4 @@ function tryPlaceWord({
 }
 
 export { tryPlaceWord };
+export type { TryPlaceWordProps, TryPlaceWordReturn };

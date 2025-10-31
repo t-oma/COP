@@ -1,9 +1,9 @@
 import { GameCard } from "./GameCard";
 import type { Game } from "../model/types";
 
-interface GamesGridProps {
+type GamesGridProps = {
   games: Game[];
-}
+};
 
 export function GamesGrid({ games }: GamesGridProps) {
   return (

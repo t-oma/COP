@@ -1,8 +1,8 @@
 import type { RecentGame } from "../model/types";
 
-interface RecentGamesProps {
+type RecentGamesProps = {
   recentGames: RecentGame[];
-}
+};
 
 function RecentGames({ recentGames }: Readonly<RecentGamesProps>) {
   return (

@@ -1,7 +1,7 @@
-interface GridWidthProps {
+type GridWidthProps = {
   width: number;
   children: React.ReactNode;
-}
+};
 
 function GridWidth({ width, children }: Readonly<GridWidthProps>) {
   return (

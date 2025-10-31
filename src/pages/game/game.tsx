@@ -2,9 +2,9 @@ import { GamePlay } from "~/features/game-play";
 import { RootLayout } from "~/widgets";
 import type { Game } from "~/entities/game";
 
-interface GamePageProps {
+type GamePageProps = {
   game?: Game;
-}
+};
 
 export default function GamePage({ game }: Readonly<GamePageProps>) {
   if (!game) {

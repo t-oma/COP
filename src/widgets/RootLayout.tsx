@@ -1,6 +1,10 @@
 import { AppFooter, AppHeader } from "~/widgets";
 
-function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+type RootLayoutProps = {
+  children: React.ReactNode;
+};
+
+function RootLayout({ children }: Readonly<RootLayoutProps>) {
   return (
     <div className="flex min-h-screen flex-col">
       <AppHeader />

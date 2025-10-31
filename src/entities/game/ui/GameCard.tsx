@@ -3,9 +3,9 @@ import { useState } from "react";
 import { SettingsModal } from "~/features/game-settings";
 import type { Game } from "../model/types";
 
-interface GameCardProps {
+type GameCardProps = {
   game: Game;
-}
+};
 
 export function GameCard({ game }: GameCardProps) {
   const [showSettings, setShowSettings] = useState(false);

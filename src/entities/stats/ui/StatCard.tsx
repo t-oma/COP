@@ -1,11 +1,16 @@
-interface StatCardProps {
+type StatCardProps = {
   title: string;
   value: string | number;
   description: string;
   icon: string;
-}
+};
 
-function StatCard({ title, value, description, icon }: StatCardProps) {
+function StatCard({
+  title,
+  value,
+  description,
+  icon,
+}: Readonly<StatCardProps>) {
   return (
     <div className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm hover:shadow-md">
       <div className="flex items-center justify-between">

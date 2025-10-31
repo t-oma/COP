@@ -1,9 +1,9 @@
 import { StatCard } from "./StatCard";
 import type { Stats } from "../model/types";
 
-interface GlobalStatsProps {
+type GlobalStatsProps = {
   stats: Stats;
-}
+};
 
 function GlobalStats({ stats }: Readonly<GlobalStatsProps>) {
   const cards = [

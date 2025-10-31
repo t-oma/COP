@@ -3,9 +3,9 @@ import { useState } from "react";
 import clsx from "clsx";
 import { Eye, EyeOff } from "lucide-react";
 
-interface RemainingWordsProps {
+type RemainingWordsProps = {
   words: string[];
-}
+};
 
 function RemainingWords({ words }: Readonly<RemainingWordsProps>) {
   const [visible, setVisible] = useState(false);
