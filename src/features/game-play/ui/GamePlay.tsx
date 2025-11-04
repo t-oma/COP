@@ -10,7 +10,10 @@ import { itemsAtPositions } from "~/shared/utils";
 import { GameTimer, SidePanel } from "~/widgets";
 import { useHint } from "../lib/useHint";
 import { GameHelp } from "./GameHelp";
+import { GameHint } from "./GameHint";
+import { GameScreen } from "./GameScreen";
 import { SelectControls } from "./SelectControls";
+import { TopPanel } from "./TopPanel";
 import type { Position } from "~/shared/types";
 
 type GamePlayProps = {
@@ -119,22 +122,15 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
         )}
       </SidePanel>
 
-      <div className="relative flex flex-1 p-16">
-        <div className="absolute top-0 right-0 left-0 flex items-center justify-between gap-4 p-2 px-4">
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={handleHint}
-              disabled={
-                hintsUsed >= 3 || highlightedPositions.length > 0 || gameEnded
-              }
-              className="inline-flex cursor-pointer items-center justify-center rounded-md bg-white px-2 py-2 hover:shadow focus:ring-2 focus:ring-blue-500 focus:outline-none disabled:cursor-not-allowed disabled:bg-zinc-50 disabled:text-zinc-400"
-            >
-              <span className="text-xs">Hint ({3 - hintsUsed} left)</span>
-            </button>
-          </div>
+      <GameScreen>
+        <TopPanel>
+          <GameHint
+            handleHint={handleHint}
+            hintsUsed={hintsUsed}
+            disabled={gameEnded || highlightedPositions.length > 0}
+          />
           <GameHelp />
-        </div>
+        </TopPanel>
         <SelectableLettersGrid
           size={size}
           letters={letters}
@@ -143,7 +139,7 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
           highlightedPositions={highlightedPositions}
           onSelectionChange={handleSelectionChange}
         />
-      </div>
+      </GameScreen>
     </div>
   );
 }

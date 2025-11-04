@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { memo, useCallback, useEffect } from "react";
 
 import { LettersGrid } from "~/entities/game";
 import { useDraggableSelection } from "../lib/useDraggableSelection";
@@ -70,4 +70,6 @@ function SelectableLettersGrid({
   );
 }
 
-export { SelectableLettersGrid };
+const SelectableLettersGridMemo = memo(SelectableLettersGrid);
+
+export { SelectableLettersGridMemo as SelectableLettersGrid };
