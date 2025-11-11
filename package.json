@@ -17,13 +17,15 @@
     "@react-router/node": "^7.9.2",
     "@react-router/serve": "^7.9.2",
     "clsx": "^2.1.1",
+    "immer": "^10.2.0",
     "isbot": "^5.1.31",
     "lucide-react": "^0.544.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-hook-form": "^7.65.0",
     "react-router": "^7.9.2",
-    "tailwind-merge": "^3.3.1"
+    "tailwind-merge": "^3.3.1",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@eslint-react/eslint-plugin": "^2.0.4",

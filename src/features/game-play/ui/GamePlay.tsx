@@ -36,7 +36,6 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
   const category = game.wordsCategory;
 
   const timer = useTimer(0);
-
   const { words, letters } = useGenerator({ size, difficulty, category });
   const { highlightedPositions, hintsUsed, handleHint } = useHint({
     size,
