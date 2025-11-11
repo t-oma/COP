@@ -1,10 +1,8 @@
-import type { ReactNode } from "react";
-import type { createGamePlayStore } from "./game-store";
-
-// --- Store ---
+import type { Position } from "~/shared/types";
 
 type GamePlayState = {
   foundWords: string[];
+  playedPositions: Position[];
 };
 
 type GamePlayActions = {
@@ -16,13 +14,4 @@ type GamePlayActions = {
 
 type GamePlayStore = GamePlayState & GamePlayActions;
 
-// --- Provider ---
-
-type GamePlayStoreApi = ReturnType<typeof createGamePlayStore>;
-
-type GamePlayStoreProviderProps = {
-  children: ReactNode;
-};
-
 export type { GamePlayState, GamePlayActions, GamePlayStore };
-export type { GamePlayStoreApi, GamePlayStoreProviderProps };

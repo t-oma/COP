@@ -1,22 +1,18 @@
-import { createStore } from "zustand/vanilla";
+import { create } from "zustand";
 import type { GamePlayState, GamePlayStore } from "./game-store-types";
 
 const defaultInitState: GamePlayState = {
   foundWords: [],
+  playedPositions: [],
 };
 
-const createGamePlayStore = (initState: GamePlayState = defaultInitState) => {
-  return createStore<GamePlayStore>()((set) => ({
-    ...initState,
-    actions: {
-      clearFoundWords: () => set({ foundWords: [] }),
-      addFoundWord: (word: string) =>
-        set((state) => ({ foundWords: [...state.foundWords, word] })),
-    },
-  }));
-};
+const useGamePlayStore = create<GamePlayStore>((set) => ({
+  ...defaultInitState,
+  actions: {
+    clearFoundWords: () => set({ foundWords: [] }),
+    addFoundWord: (word: string) =>
+      set((state) => ({ foundWords: [...state.foundWords, word] })),
+  },
+}));
 
-export {
-  defaultInitState as gamePlayStoreDefaultInitState,
-  createGamePlayStore,
-};
+export { defaultInitState as gamePlayStoreDefaultInitState, useGamePlayStore };

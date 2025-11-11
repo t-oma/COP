@@ -1,4 +1,3 @@
-import { GamePlayStoreProvider } from "~/features/game-play/model/game-store-provider";
 import { GameSettingsProvider } from "~/features/game-settings";
 
 type ProvidersProps = {
@@ -6,11 +5,7 @@ type ProvidersProps = {
 };
 
 function Providers({ children }: Readonly<ProvidersProps>) {
-  return (
-    <GameSettingsProvider>
-      <GamePlayStoreProvider>{children}</GamePlayStoreProvider>
-    </GameSettingsProvider>
-  );
+  return <GameSettingsProvider>{children}</GameSettingsProvider>;
 }
 
 export { Providers };

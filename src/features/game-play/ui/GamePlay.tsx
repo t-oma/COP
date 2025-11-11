@@ -9,6 +9,7 @@ import { useTimer } from "~/shared/hooks";
 import { itemsAtPositions } from "~/shared/utils";
 import { GameTimer, SidePanel } from "~/widgets";
 import { useHint } from "../lib/useHint";
+import { useGamePlayStore } from "../model/game-store";
 import { GameHelp } from "./GameHelp";
 import { GameHint } from "./GameHint";
 import { GameScreen } from "./GameScreen";
@@ -21,9 +22,13 @@ type GamePlayProps = {
 };
 
 export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
-  const [foundWords, setFoundWords] = useState<string[]>([]);
   const [playedPositions, setPlayedPositions] = useState<Position[]>([]);
   const [selectedPositions, setSelectedPositions] = useState<Position[]>([]);
+
+  const {
+    actions: { addFoundWord },
+    foundWords,
+  } = useGamePlayStore((state) => state);
 
   const { settings } = useGameSettings();
 
@@ -61,7 +66,6 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
   }, []);
 
   const handleSubmitWord = useCallback(() => {
-    console.log("handleSubmitWord");
     if (selectedPositions.length === 0) return;
 
     const selectedWord = itemsAtPositions(letters, selectedPositions)
@@ -71,14 +75,13 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
       .toLowerCase();
 
     if (words.includes(selectedWord) && !foundWords.includes(selectedWord)) {
-      setFoundWords((prev) => [...prev, selectedWord]);
+      addFoundWord(selectedWord);
       setPlayedPositions((prev) => [...prev, ...selectedPositions]);
     }
     setSelectedPositions([]);
-  }, [foundWords, selectedPositions, words, letters]);
+  }, [foundWords, addFoundWord, selectedPositions, words, letters]);
 
   const handleResetSelection = useCallback(() => {
-    console.log("handleResetSelection");
     setSelectedPositions([]);
   }, []);
 
