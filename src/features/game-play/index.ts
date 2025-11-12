@@ -7,3 +7,10 @@ export { useHint } from "./lib/useHint";
 export { GameScreen } from "./ui/GameScreen";
 export { TopPanel } from "./ui/TopPanel";
 export type { UseHintProps, UseHintReturn } from "./lib/useHint";
+
+export { useGamePlayStore } from "./model/game-store";
+export type {
+  GamePlayStore,
+  GamePlayState,
+  GamePlayActions,
+} from "./model/game-store-types";

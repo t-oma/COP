@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 
 import { FoundWords, games } from "~/entities/game";
 import { useGameSettings } from "~/features/game-settings";
@@ -15,20 +15,22 @@ import { GameHint } from "./GameHint";
 import { GameScreen } from "./GameScreen";
 import { SelectControls } from "./SelectControls";
 import { TopPanel } from "./TopPanel";
-import type { Position } from "~/shared/types";
 
 type GamePlayProps = {
   gameId: number;
 };
 
 export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
-  const [playedPositions, setPlayedPositions] = useState<Position[]>([]);
-  const [selectedPositions, setSelectedPositions] = useState<Position[]>([]);
-
+  const foundWords = useGamePlayStore((state) => state.foundWords);
+  const selectedPositions = useGamePlayStore(
+    (state) => state.selectedPositions
+  );
   const {
-    actions: { addFoundWord },
-    foundWords,
-  } = useGamePlayStore((state) => state);
+    addFoundWord,
+    updatePlayedPositions,
+    setSelectedPositions,
+    resetSelectedPositions,
+  } = useGamePlayStore((state) => state.actions);
 
   const { settings } = useGameSettings();
 
@@ -61,10 +63,6 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
     }
   }, [gameEnded, timer]);
 
-  const handleSelectionChange = useCallback((positions: Position[]) => {
-    setSelectedPositions(positions);
-  }, []);
-
   const handleSubmitWord = useCallback(() => {
     if (selectedPositions.length === 0) return;
 
@@ -76,14 +74,18 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
 
     if (words.includes(selectedWord) && !foundWords.includes(selectedWord)) {
       addFoundWord(selectedWord);
-      setPlayedPositions((prev) => [...prev, ...selectedPositions]);
+      updatePlayedPositions(selectedPositions);
     }
     setSelectedPositions([]);
-  }, [foundWords, addFoundWord, selectedPositions, words, letters]);
-
-  const handleResetSelection = useCallback(() => {
-    setSelectedPositions([]);
-  }, []);
+  }, [
+    foundWords,
+    setSelectedPositions,
+    addFoundWord,
+    updatePlayedPositions,
+    selectedPositions,
+    words,
+    letters,
+  ]);
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -91,7 +93,7 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
         handleSubmitWord();
       }
       if (e.key === "Escape") {
-        handleResetSelection();
+        resetSelectedPositions();
       }
     };
 
@@ -99,7 +101,7 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
     return () => {
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [handleSubmitWord, handleResetSelection]);
+  }, [handleSubmitWord, resetSelectedPositions]);
 
   return (
     <div className="flex flex-1">
@@ -115,13 +117,7 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
 
         <GameTimer timer={timer} />
 
-        {isSelecting && (
-          <SelectControls
-            selectedLength={selectedPositions.length}
-            handleSubmitWord={handleSubmitWord}
-            handleResetSelection={handleResetSelection}
-          />
-        )}
+        {isSelecting && <SelectControls handleSubmitWord={handleSubmitWord} />}
       </SidePanel>
 
       <GameScreen>
@@ -136,10 +132,7 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
         <SelectableLettersGrid
           size={size}
           letters={letters}
-          playedPositions={playedPositions}
-          selectedPositions={selectedPositions}
           highlightedPositions={highlightedPositions}
-          onSelectionChange={handleSelectionChange}
         />
       </GameScreen>
     </div>

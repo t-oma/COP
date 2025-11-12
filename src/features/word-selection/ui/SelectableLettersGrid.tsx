@@ -1,16 +1,14 @@
-import { memo, useCallback, useEffect } from "react";
+import { memo, useEffect } from "react";
 
 import { LettersGrid } from "~/entities/game";
+import { useGamePlayStore } from "~/features/game-play";
 import { useDraggableSelection } from "../lib/useDraggableSelection";
 import type { Position } from "~/shared/types";
 
 type SelectableLettersGridProps = {
   size: number;
   letters: string[][];
-  playedPositions: Position[];
-  selectedPositions: Position[];
   highlightedPositions?: Position[];
-  onSelectionChange?: (positions: Position[]) => void;
 };
 
 const defaultHighlightedPositions: Position[] = [];
@@ -18,33 +16,14 @@ const defaultHighlightedPositions: Position[] = [];
 function SelectableLettersGrid({
   size,
   letters,
-  playedPositions,
-  selectedPositions,
   highlightedPositions = defaultHighlightedPositions,
-  onSelectionChange,
 }: Readonly<SelectableLettersGridProps>) {
+  const { setSelectedPositions } = useGamePlayStore((state) => state.actions);
+
   const { startDragSelection, updateDragSelection, endDragSelection } =
     useDraggableSelection({
-      onSelectionChange,
+      onSelectionChange: setSelectedPositions,
     });
-
-  const handleMouseDown = useCallback(
-    (row: number, col: number) => {
-      startDragSelection(row, col);
-    },
-    [startDragSelection]
-  );
-
-  const handleMouseEnter = useCallback(
-    (row: number, col: number) => {
-      updateDragSelection(row, col);
-    },
-    [updateDragSelection]
-  );
-
-  const handleMouseUp = useCallback(() => {
-    endDragSelection();
-  }, [endDragSelection]);
 
   // Global mouse up handler
   useEffect(() => {
@@ -60,12 +39,10 @@ function SelectableLettersGrid({
     <LettersGrid
       size={size}
       letters={letters}
-      playedPositions={playedPositions}
       highlightedPositions={highlightedPositions}
-      selectedPositions={selectedPositions}
-      onMouseDown={handleMouseDown}
-      onMouseEnter={handleMouseEnter}
-      onMouseUp={handleMouseUp}
+      onMouseDown={startDragSelection}
+      onMouseEnter={updateDragSelection}
+      onMouseUp={endDragSelection}
     />
   );
 }
