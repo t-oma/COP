@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect } from "react";
 
-import { FoundWords, games } from "~/entities/game";
+import { FoundWords } from "~/entities/game";
 import { useGameSettings } from "~/features/game-settings";
 import { useGenerator } from "~/features/grid-generator";
 import { ResultsModal } from "~/features/results-modal";
@@ -15,12 +15,13 @@ import { GameHint } from "./GameHint";
 import { GameScreen } from "./GameScreen";
 import { SelectControls } from "./SelectControls";
 import { TopPanel } from "./TopPanel";
+import type { Game } from "~/entities/game";
 
 type GamePlayProps = {
-  gameId: number;
+  game: Game;
 };
 
-export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
+export function GamePlay({ game }: Readonly<GamePlayProps>) {
   const foundWords = useGamePlayStore((state) => state.foundWords);
   const selectedPositions = useGamePlayStore(
     (state) => state.selectedPositions
@@ -34,10 +35,6 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
 
   const { settings } = useGameSettings();
 
-  const game = useMemo(
-    () => games.find((g) => g.id === gameId) || games[0],
-    [gameId]
-  );
   const size = settings.gridSize;
   const difficulty = settings.difficulty;
   const category = game.wordsCategory;
