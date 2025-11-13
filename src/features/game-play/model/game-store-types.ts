@@ -13,6 +13,11 @@ type GamePlayActions = {
     updatePlayedPositions: (positions: Position[]) => void;
     setSelectedPositions: (positions: Position[]) => void;
     resetSelectedPositions: () => void;
+    submitWord: (
+      words: string[],
+      letters: string[][],
+      positions: Position[]
+    ) => void;
   };
 };
 

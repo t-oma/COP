@@ -1,22 +1,22 @@
 import { memo } from "react";
 import { useNavigate } from "react-router";
 
+import { useGamePlayStore } from "~/features/game-play";
 import { AppModal } from "~/widgets";
 import type { UseTimerReturn } from "~/shared/hooks";
 import type { AppModalProps } from "~/widgets";
 
 type ResultsModalProps = Pick<AppModalProps, "open"> & {
   timer: UseTimerReturn;
-  foundWords: string[];
   totalWords: string[];
 };
 
 function ResultsModal({
   open,
   timer,
-  foundWords,
   totalWords,
 }: Readonly<ResultsModalProps>) {
+  const foundWords = useGamePlayStore((state) => state.foundWords);
   const navigate = useNavigate();
 
   const handleRestart = () => {

@@ -6,7 +6,6 @@ import { useGenerator } from "~/features/grid-generator";
 import { ResultsModal } from "~/features/results-modal";
 import { SelectableLettersGrid } from "~/features/word-selection";
 import { useTimer } from "~/shared/hooks";
-import { itemsAtPositions } from "~/shared/utils";
 import { GameTimer, SidePanel } from "~/widgets";
 import { useHint } from "../lib/useHint";
 import { useGamePlayStore } from "../model/game-store";
@@ -26,12 +25,9 @@ export function GamePlay({ game }: Readonly<GamePlayProps>) {
   const selectedPositions = useGamePlayStore(
     (state) => state.selectedPositions
   );
-  const {
-    addFoundWord,
-    updatePlayedPositions,
-    setSelectedPositions,
-    resetSelectedPositions,
-  } = useGamePlayStore((state) => state.actions);
+  const { resetSelectedPositions, submitWord } = useGamePlayStore(
+    (state) => state.actions
+  );
 
   const { settings } = useGameSettings();
 
@@ -61,28 +57,8 @@ export function GamePlay({ game }: Readonly<GamePlayProps>) {
   }, [gameEnded, timer]);
 
   const handleSubmitWord = useCallback(() => {
-    if (selectedPositions.length === 0) return;
-
-    const selectedWord = itemsAtPositions(letters, selectedPositions)
-      .reduce((acc, cur) => {
-        return acc + cur.join("");
-      }, "")
-      .toLowerCase();
-
-    if (words.includes(selectedWord) && !foundWords.includes(selectedWord)) {
-      addFoundWord(selectedWord);
-      updatePlayedPositions(selectedPositions);
-    }
-    setSelectedPositions([]);
-  }, [
-    foundWords,
-    setSelectedPositions,
-    addFoundWord,
-    updatePlayedPositions,
-    selectedPositions,
-    words,
-    letters,
-  ]);
+    submitWord(words, letters, selectedPositions);
+  }, [selectedPositions, words, letters, submitWord]);
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -102,15 +78,10 @@ export function GamePlay({ game }: Readonly<GamePlayProps>) {
 
   return (
     <div className="flex flex-1">
-      <ResultsModal
-        open={gameEnded}
-        timer={timer}
-        foundWords={foundWords}
-        totalWords={words}
-      />
+      <ResultsModal open={gameEnded} timer={timer} totalWords={words} />
 
       <SidePanel>
-        <FoundWords foundWords={foundWords} totalWords={words} />
+        <FoundWords totalWords={words} />
 
         <GameTimer timer={timer} />
 
