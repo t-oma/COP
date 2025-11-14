@@ -3,3 +3,9 @@ export { GlobalStats } from "./ui/GlobalStats";
 export { RecentGames } from "./ui/RecentGames";
 export type { Stats, RecentGame } from "./model/types";
 export { stats, recentGames } from "./model/stats";
+export type {
+  StatsState,
+  StatsActions,
+  StatsStore,
+} from "./model/stats-store-types";
+export { useStatsStore, statsStoreDefaultInitState } from "./model/stats-store";

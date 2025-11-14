@@ -5,7 +5,7 @@ export const stats: Stats = {
   wordsFound: 387,
   averageScore: 85,
   bestStreak: 12,
-  totalTime: "24h 15m",
+  totalTime: 120,
   favoriteDifficulty: "medium",
 };
 

@@ -33,7 +33,7 @@ function GlobalStats({ stats }: Readonly<GlobalStatsProps>) {
     },
     {
       title: "Time Played",
-      value: stats.totalTime,
+      value: `${stats.totalTime} sec`,
       description: "Total time spent playing",
       icon: "⏱️",
     },

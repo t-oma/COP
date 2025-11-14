@@ -1,6 +1,7 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 import { FoundWords } from "~/entities/game";
+import { useStatsStore } from "~/entities/stats";
 import { useGameSettings } from "~/features/game-settings";
 import { useGenerator } from "~/features/grid-generator";
 import { ResultsModal } from "~/features/results-modal";
@@ -21,13 +22,16 @@ type GamePlayProps = {
 };
 
 export function GamePlay({ game }: Readonly<GamePlayProps>) {
+  const gameRegistered = useRef(false);
+
   const foundWords = useGamePlayStore((state) => state.foundWords);
   const selectedPositions = useGamePlayStore(
     (state) => state.selectedPositions
   );
-  const { resetSelectedPositions, submitWord } = useGamePlayStore(
+  const { resetSelectedPositions, submitWord, reset } = useGamePlayStore(
     (state) => state.actions
   );
+  const { registerGame } = useStatsStore((state) => state.actions);
 
   const { settings } = useGameSettings();
 
@@ -48,17 +52,30 @@ export function GamePlay({ game }: Readonly<GamePlayProps>) {
   const isSelecting = selectedPositions.length > 0;
   const gameEnded = words.length > 0 && words.length === foundWords.length;
 
-  useEffect(() => {
-    if (gameEnded) {
-      timer.pause();
-    } else {
-      timer.start();
-    }
-  }, [gameEnded, timer]);
-
   const handleSubmitWord = useCallback(() => {
     submitWord(words, letters, selectedPositions);
   }, [selectedPositions, words, letters, submitWord]);
+
+  const handleGameOver = useCallback(() => {
+    registerGame({
+      wordsFound: foundWords.length,
+      totalWords: words.length,
+      timeTaken: timer.time,
+      difficulty: difficulty,
+    });
+    gameRegistered.current = true;
+  }, [registerGame, foundWords, timer, difficulty, words]);
+
+  useEffect(() => {
+    if (gameEnded) {
+      timer.pause();
+
+      if (gameRegistered.current) return;
+      handleGameOver();
+    } else {
+      timer.start();
+    }
+  }, [gameEnded, timer, handleGameOver]);
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -75,6 +92,12 @@ export function GamePlay({ game }: Readonly<GamePlayProps>) {
       window.removeEventListener("keydown", onKeyDown);
     };
   }, [handleSubmitWord, resetSelectedPositions]);
+
+  useEffect(() => {
+    return () => {
+      reset();
+    };
+  }, [reset]);
 
   return (
     <div className="flex flex-1">
