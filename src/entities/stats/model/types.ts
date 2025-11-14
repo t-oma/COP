@@ -5,7 +5,7 @@ export type Stats = {
   wordsFound: number;
   averageScore: number;
   bestStreak: number;
-  totalTime: string;
+  totalTime: number;
   favoriteDifficulty: Difficulty;
 };
 

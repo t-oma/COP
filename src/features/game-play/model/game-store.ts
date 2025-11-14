@@ -29,6 +29,13 @@ const useGamePlayStore = create<GamePlayStore, [["zustand/immer", never]]>(
           state.playedPositions = [...state.playedPositions, ...positions];
         }),
 
+      reset: () =>
+        set((state) => {
+          state.foundWords = [];
+          state.playedPositions = [];
+          state.selectedPositions = [];
+        }),
+
       setSelectedPositions: (positions: Position[]) =>
         set((state) => {
           state.selectedPositions = positions;
