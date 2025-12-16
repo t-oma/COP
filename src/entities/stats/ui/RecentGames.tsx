@@ -1,3 +1,4 @@
+import { capitalize } from "~/shared/utils";
 import type { RecentGame } from "../model/types";
 
 type RecentGamesProps = {
@@ -18,7 +19,9 @@ function RecentGames({ recentGames }: Readonly<RecentGamesProps>) {
               <div className="flex items-center space-x-4">
                 <div className="text-2xl">🎯</div>
                 <div>
-                  <p className="text-foreground font-medium">{game.title}</p>
+                  <p className="text-foreground font-medium">
+                    {game.title} | {capitalize(game.difficulty)}
+                  </p>
                   <p className="text-muted-foreground text-sm">{game.date}</p>
                 </div>
               </div>

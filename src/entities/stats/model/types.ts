@@ -14,4 +14,5 @@ export type RecentGame = {
   score: string;
   time: string;
   date: string;
+  difficulty: Difficulty;
 };

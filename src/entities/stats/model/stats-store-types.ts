@@ -13,13 +13,15 @@ type StatsActions = {
   };
 };
 
-type StatsStore = StatsState & StatsActions;
+type StatsStore = { context: StatsState } & StatsActions;
 
 type RegisterGameParams = {
   wordsFound: number;
   totalWords: number;
   timeTaken: number;
   difficulty: Difficulty;
+  title: string;
+  date: string;
 };
 
 export type { StatsState, StatsActions, StatsStore, RegisterGameParams };
