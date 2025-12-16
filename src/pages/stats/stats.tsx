@@ -2,8 +2,8 @@ import { GlobalStats, RecentGames, useStatsStore } from "~/entities/stats";
 import { RootLayout } from "~/widgets";
 
 export default function StatsPage() {
-  const stats = useStatsStore((state) => state.global);
-  const recentGames = useStatsStore((state) => state.recentGames);
+  const stats = useStatsStore((state) => state.context.global);
+  const recentGames = useStatsStore((state) => state.context.recentGames);
 
   return (
     <RootLayout>

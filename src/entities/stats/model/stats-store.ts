@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import type { Difficulty } from "~/shared/types";
 import type {
@@ -26,52 +27,77 @@ const defaultInitState: StatsState = {
 };
 
 const useStatsStore = create<StatsStore>()(
-  immer((set) => ({
-    ...defaultInitState,
-    actions: {
-      registerGame: (params: RegisterGameParams) =>
-        set((state) => {
-          if (!state.global) {
-            state.global = {
-              gamesPlayed: 0,
-              wordsFound: 0,
-              averageScore: 100,
-              bestStreak: 0,
-              totalTime: 0,
-              favoriteDifficulty: "easy",
-            };
-          }
-
-          state.global.gamesPlayed += 1;
-          state.global.bestStreak += 1;
-          state.global.wordsFound += params.wordsFound;
-
-          const newScore = Math.round(
-            (params.totalWords / params.wordsFound) * 100
-          );
-          state.global.averageScore = Math.round(
-            (state.global.averageScore + newScore) / 2
-          );
-
-          const currentFavorite = state.global.favoriteDifficulty;
-          const newFavorite = getMostPlayedDifficulty(state.playedDifficulties);
-
-          if (state.global.gamesPlayed === 1) {
-            state.global.favoriteDifficulty = params.difficulty;
-          } else {
-            const currentCount =
-              state.playedDifficulties.get(currentFavorite) ?? 0;
-            const newCount = state.playedDifficulties.get(newFavorite) ?? 0;
-
-            if (newCount > currentCount) {
-              state.global.favoriteDifficulty = newFavorite;
+  persist(
+    immer((set) => ({
+      context: {
+        ...defaultInitState,
+      },
+      actions: {
+        registerGame: (params: RegisterGameParams) =>
+          set((state) => {
+            if (!state.context.global) {
+              state.context.global = {
+                gamesPlayed: 0,
+                wordsFound: 0,
+                averageScore: 100,
+                bestStreak: 0,
+                totalTime: 0,
+                favoriteDifficulty: "easy",
+              };
             }
-          }
 
-          state.global.totalTime += params.timeTaken;
-        }),
-    },
-  }))
+            state.context.global.gamesPlayed += 1;
+            state.context.global.bestStreak += 1;
+            state.context.global.wordsFound += params.wordsFound;
+
+            const newScore = Math.round(
+              (params.totalWords / params.wordsFound) * 100
+            );
+
+            state.context.global.averageScore = Math.round(
+              (state.context.global.averageScore + newScore) / 2
+            );
+
+            const nextPlayedDifficulties = new Map(
+              state.context.playedDifficulties
+            );
+            nextPlayedDifficulties.set(
+              params.difficulty,
+              (nextPlayedDifficulties.get(params.difficulty) ?? 0) + 1
+            );
+            state.context.playedDifficulties = nextPlayedDifficulties;
+
+            const newFavorite = getMostPlayedDifficulty(
+              state.context.playedDifficulties
+            );
+
+            if (
+              state.context.global.gamesPlayed === 1 ||
+              (state.context.playedDifficulties.get(newFavorite) ?? 0) >
+                (state.context.playedDifficulties.get(
+                  state.context.global.favoriteDifficulty
+                ) ?? 0)
+            ) {
+              state.context.global.favoriteDifficulty = newFavorite;
+            }
+
+            state.context.global.totalTime += params.timeTaken;
+
+            state.context.recentGames.push({
+              title: params.title,
+              score: newScore.toString(),
+              time: params.timeTaken.toString(),
+              date: params.date,
+              difficulty: params.difficulty,
+            });
+          }),
+      },
+    })),
+    {
+      name: "stats-storage",
+      partialize: (state) => ({ context: state.context }),
+    }
+  )
 );
 
 export { useStatsStore, defaultInitState as statsStoreDefaultInitState };

@@ -62,9 +62,11 @@ export function GamePlay({ game }: Readonly<GamePlayProps>) {
       totalWords: words.length,
       timeTaken: timer.time,
       difficulty: difficulty,
+      title: game.title,
+      date: new Date().toLocaleString(),
     });
     gameRegistered.current = true;
-  }, [registerGame, foundWords, timer, difficulty, words]);
+  }, [registerGame, foundWords, timer, difficulty, words, game.title]);
 
   useEffect(() => {
     if (gameEnded) {
