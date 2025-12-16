@@ -1,5 +1,6 @@
 import { useCallback, useRef } from "react";
 
+import { useGamePlayStore } from "~/features/game-play";
 import { cn } from "~/shared/utils";
 import { GridWidth } from "~/widgets";
 import type { Position } from "~/shared/types";
@@ -7,28 +8,28 @@ import type { Position } from "~/shared/types";
 type LettersGridProps = {
   size: number;
   letters: string[][];
-  playedPositions: Position[];
   highlightedPositions?: Position[];
-  selectedPositions?: Position[];
   onMouseDown?: (row: number, col: number) => void;
   onMouseEnter?: (row: number, col: number) => void;
   onMouseUp?: () => void;
 };
 
 const defaultHighlightedPositions: Position[] = [];
-const defaultSelectedPositions: Position[] = [];
 
 function LettersGrid({
   size,
   letters,
-  playedPositions,
   highlightedPositions = defaultHighlightedPositions,
-  selectedPositions = defaultSelectedPositions,
   onMouseDown,
   onMouseEnter,
   onMouseUp,
 }: LettersGridProps) {
   const gridRef = useRef<HTMLDivElement>(null);
+
+  const selectedPositions = useGamePlayStore(
+    (state) => state.selectedPositions
+  );
+  const playedPositions = useGamePlayStore((state) => state.playedPositions);
 
   const isPositionSelected = useCallback(
     (row: number, col: number) => {

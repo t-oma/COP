@@ -1,18 +1,19 @@
+import { useGamePlayStore } from "../model/game-store";
+
 type SelectControlsProps = {
-  selectedLength: number;
   handleSubmitWord: () => void;
-  handleResetSelection: () => void;
 };
 
-function SelectControls({
-  selectedLength,
-  handleSubmitWord,
-  handleResetSelection,
-}: Readonly<SelectControlsProps>) {
+function SelectControls({ handleSubmitWord }: Readonly<SelectControlsProps>) {
+  const selectedPositions = useGamePlayStore(
+    (state) => state.selectedPositions
+  );
+  const { resetSelectedPositions } = useGamePlayStore((state) => state.actions);
+
   return (
     <div className="mt-4 space-y-2">
       <div className="text-sm text-zinc-600">
-        Selected: {selectedLength} letters
+        Selected: {selectedPositions.length} letters
       </div>
       <div className="flex gap-2">
         <button
@@ -24,7 +25,7 @@ function SelectControls({
         </button>
         <button
           type="button"
-          onClick={handleResetSelection}
+          onClick={resetSelectedPositions}
           className="flex-1 rounded bg-red-500 px-3 py-1 text-sm text-white transition-colors hover:bg-red-600"
         >
           Reset

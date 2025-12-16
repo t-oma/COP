@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 type SidePanelProps = {
   children: React.ReactNode;
 };
@@ -10,4 +12,6 @@ function SidePanel({ children }: Readonly<SidePanelProps>) {
   );
 }
 
-export { SidePanel };
+const SidePanelMemo = memo(SidePanel);
+
+export { SidePanelMemo as SidePanel };

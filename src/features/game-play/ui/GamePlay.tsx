@@ -1,39 +1,45 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
-import { FoundWords, games } from "~/entities/game";
+import { FoundWords } from "~/entities/game";
+import { useStatsStore } from "~/entities/stats";
 import { useGameSettings } from "~/features/game-settings";
 import { useGenerator } from "~/features/grid-generator";
 import { ResultsModal } from "~/features/results-modal";
 import { SelectableLettersGrid } from "~/features/word-selection";
 import { useTimer } from "~/shared/hooks";
-import { itemsAtPositions } from "~/shared/utils";
 import { GameTimer, SidePanel } from "~/widgets";
 import { useHint } from "../lib/useHint";
+import { useGamePlayStore } from "../model/game-store";
 import { GameHelp } from "./GameHelp";
+import { GameHint } from "./GameHint";
+import { GameScreen } from "./GameScreen";
 import { SelectControls } from "./SelectControls";
-import type { Position } from "~/shared/types";
+import { TopPanel } from "./TopPanel";
+import type { Game } from "~/entities/game";
 
 type GamePlayProps = {
-  gameId: number;
+  game: Game;
 };
 
-export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
-  const [foundWords, setFoundWords] = useState<string[]>([]);
-  const [playedPositions, setPlayedPositions] = useState<Position[]>([]);
-  const [selectedPositions, setSelectedPositions] = useState<Position[]>([]);
+export function GamePlay({ game }: Readonly<GamePlayProps>) {
+  const gameRegistered = useRef(false);
+
+  const foundWords = useGamePlayStore((state) => state.foundWords);
+  const selectedPositions = useGamePlayStore(
+    (state) => state.selectedPositions
+  );
+  const { resetSelectedPositions, submitWord, reset } = useGamePlayStore(
+    (state) => state.actions
+  );
+  const { registerGame } = useStatsStore((state) => state.actions);
 
   const { settings } = useGameSettings();
 
-  const game = useMemo(
-    () => games.find((g) => g.id === gameId) || games[0],
-    [gameId]
-  );
   const size = settings.gridSize;
   const difficulty = settings.difficulty;
   const category = game.wordsCategory;
 
   const timer = useTimer(0);
-
   const { words, letters } = useGenerator({ size, difficulty, category });
   const { highlightedPositions, hintsUsed, handleHint } = useHint({
     size,
@@ -46,39 +52,30 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
   const isSelecting = selectedPositions.length > 0;
   const gameEnded = words.length > 0 && words.length === foundWords.length;
 
+  const handleSubmitWord = useCallback(() => {
+    submitWord(words, letters, selectedPositions);
+  }, [selectedPositions, words, letters, submitWord]);
+
+  const handleGameOver = useCallback(() => {
+    registerGame({
+      wordsFound: foundWords.length,
+      totalWords: words.length,
+      timeTaken: timer.time,
+      difficulty: difficulty,
+    });
+    gameRegistered.current = true;
+  }, [registerGame, foundWords, timer, difficulty, words]);
+
   useEffect(() => {
     if (gameEnded) {
       timer.pause();
+
+      if (gameRegistered.current) return;
+      handleGameOver();
     } else {
       timer.start();
     }
-  }, [gameEnded, timer]);
-
-  const handleSelectionChange = useCallback((positions: Position[]) => {
-    setSelectedPositions(positions);
-  }, []);
-
-  const handleSubmitWord = useCallback(() => {
-    console.log("handleSubmitWord");
-    if (selectedPositions.length === 0) return;
-
-    const selectedWord = itemsAtPositions(letters, selectedPositions)
-      .reduce((acc, cur) => {
-        return acc + cur.join("");
-      }, "")
-      .toLowerCase();
-
-    if (words.includes(selectedWord) && !foundWords.includes(selectedWord)) {
-      setFoundWords((prev) => [...prev, selectedWord]);
-      setPlayedPositions((prev) => [...prev, ...selectedPositions]);
-    }
-    setSelectedPositions([]);
-  }, [foundWords, selectedPositions, words, letters]);
-
-  const handleResetSelection = useCallback(() => {
-    console.log("handleResetSelection");
-    setSelectedPositions([]);
-  }, []);
+  }, [gameEnded, timer, handleGameOver]);
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -86,7 +83,7 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
         handleSubmitWord();
       }
       if (e.key === "Escape") {
-        handleResetSelection();
+        resetSelectedPositions();
       }
     };
 
@@ -94,56 +91,41 @@ export function GamePlay({ gameId }: Readonly<GamePlayProps>) {
     return () => {
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [handleSubmitWord, handleResetSelection]);
+  }, [handleSubmitWord, resetSelectedPositions]);
+
+  useEffect(() => {
+    return () => {
+      reset();
+    };
+  }, [reset]);
 
   return (
     <div className="flex flex-1">
-      <ResultsModal
-        open={gameEnded}
-        timer={timer}
-        foundWords={foundWords}
-        totalWords={words}
-      />
+      <ResultsModal open={gameEnded} timer={timer} totalWords={words} />
 
       <SidePanel>
-        <FoundWords foundWords={foundWords} totalWords={words} />
+        <FoundWords totalWords={words} />
 
         <GameTimer timer={timer} />
 
-        {isSelecting && (
-          <SelectControls
-            selectedLength={selectedPositions.length}
-            handleSubmitWord={handleSubmitWord}
-            handleResetSelection={handleResetSelection}
-          />
-        )}
+        {isSelecting && <SelectControls handleSubmitWord={handleSubmitWord} />}
       </SidePanel>
 
-      <div className="relative flex flex-1 p-16">
-        <div className="absolute top-0 right-0 left-0 flex items-center justify-between gap-4 p-2 px-4">
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={handleHint}
-              disabled={
-                hintsUsed >= 3 || highlightedPositions.length > 0 || gameEnded
-              }
-              className="inline-flex cursor-pointer items-center justify-center rounded-md bg-white px-2 py-2 hover:shadow focus:ring-2 focus:ring-blue-500 focus:outline-none disabled:cursor-not-allowed disabled:bg-zinc-50 disabled:text-zinc-400"
-            >
-              <span className="text-xs">Hint ({3 - hintsUsed} left)</span>
-            </button>
-          </div>
+      <GameScreen>
+        <TopPanel>
+          <GameHint
+            handleHint={handleHint}
+            hintsUsed={hintsUsed}
+            disabled={gameEnded || highlightedPositions.length > 0}
+          />
           <GameHelp />
-        </div>
+        </TopPanel>
         <SelectableLettersGrid
           size={size}
           letters={letters}
-          playedPositions={playedPositions}
-          selectedPositions={selectedPositions}
           highlightedPositions={highlightedPositions}
-          onSelectionChange={handleSelectionChange}
         />
-      </div>
+      </GameScreen>
     </div>
   );
 }

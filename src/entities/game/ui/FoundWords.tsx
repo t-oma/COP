@@ -1,19 +1,18 @@
 import { memo } from "react";
 
 import { Check } from "lucide-react";
+import { useGamePlayStore } from "~/features/game-play";
 import { RemainingWords } from "./RemainingWords";
 
 const EMPTY_ARRAY: string[] = [];
 
 type FoundWordsProps = {
-  foundWords?: string[];
   totalWords?: string[];
 };
 
-function FoundWords({
-  foundWords = EMPTY_ARRAY,
-  totalWords = EMPTY_ARRAY,
-}: Readonly<FoundWordsProps>) {
+function FoundWords({ totalWords = EMPTY_ARRAY }: Readonly<FoundWordsProps>) {
+  const foundWords = useGamePlayStore((state) => state.foundWords);
+
   const remainingWords = totalWords.filter(
     (word) => !foundWords.includes(word)
   );

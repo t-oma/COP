@@ -2,12 +2,12 @@ import { wordsLibrary } from "~/shared/data/words";
 import { shuffle } from "~/shared/utils";
 import type { Difficulty, WordsCategory } from "~/shared/types";
 
-const wordCountRanges = {
+const WORD_COUNT_RANGES = {
   easy: { min: 3, max: 4 },
   medium: { min: 5, max: 6 },
   hard: { min: 6, max: 7 },
 };
-const wordLengthRanges = {
+const WORD_LENGTH_RANGES = {
   easy: { min: 3 },
   medium: { min: 4 },
   hard: { min: 5 },
@@ -32,7 +32,7 @@ function generateWords(
   }
 
   // Filter words by length suitable for grid size
-  const minLength = wordLengthRanges[difficulty].min;
+  const minLength = WORD_LENGTH_RANGES[difficulty].min;
   const maxLength = size;
   const suitableWords = Array.from(difficultyWords).filter(
     (word: string) => word.length >= minLength && word.length <= maxLength
@@ -44,7 +44,7 @@ function generateWords(
     );
   }
 
-  const { min: minWords, max: maxWords } = wordCountRanges[difficulty];
+  const { min: minWords, max: maxWords } = WORD_COUNT_RANGES[difficulty];
   const wordCount = Math.min(
     Math.floor(Math.random() * (maxWords - minWords + 1)) + minWords,
     suitableWords.length

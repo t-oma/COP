@@ -24,7 +24,7 @@ export default function GamePage({ game }: Readonly<GamePageProps>) {
           <h1 className="text-xl font-semibold">{game.title}</h1>
         </div>
 
-        <GamePlay gameId={game.id} />
+        <GamePlay game={game} />
       </main>
     </RootLayout>
   );
